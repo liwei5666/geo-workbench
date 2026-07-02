@@ -69,7 +69,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .tag-game{background:rgba(167,139,250,0.15);color:#a78bfa;}.tag-finance{background:rgba(251,191,36,0.15);color:#fbbf24;}
 .tag-law{background:rgba(244,114,182,0.15);color:#f472b6;}.tag-decoration{background:rgba(249,115,22,0.15);color:#f97316;}
 .tag-local{background:rgba(52,211,153,0.15);color:#34d399;}.tag-machinery{background:rgba(148,163,184,0.15);color:#94a3b8;}
-.tag-other{background:rgba(148,163,184,0.1);color:#94a3b8;}
+.tag-tech{background:rgba(79,143,247,0.2);color:#60a5fa;}.tag-ecommerce{background:rgba(251,191,36,0.2);color:#fbbf24;}.tag-enterprise{background:rgba(52,211,153,0.15);color:#34d399;}.tag-software{background:rgba(139,92,246,0.2);color:#a78bfa;}.tag-other{background:rgba(148,163,184,0.1);color:#94a3b8;}
 .priority-badge{font-size:11px;padding:3px 10px;border-radius:10px;font-weight:600;}
 .priority-high{background:rgba(248,113,113,0.15);color:#f87171;}.priority-urgent{background:rgba(249,115,22,0.2);color:#f97316;animation:pulse 2s infinite;}
 .priority-medium{background:rgba(251,191,36,0.15);color:#fbbf24;}.priority-low{background:rgba(148,163,184,0.15);color:#94a3b8;}
@@ -110,6 +110,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
   <div class="header-meta">
     <button class="back-btn" id="backBtn" onclick="goLanding()">← 返回首页</button>
     <span class="badge" id="updateBadge">📅 数据更新：<span id="updateDate">--</span></span>
+    <span class="badge" style="background:rgba(249,115,22,0.15);color:var(--urgent)" id="weekBadge">📊 第<span id="weekNum">--</span>周</span>
   </div>
 </div>
 
@@ -153,8 +154,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
     <input class="search-input" id="aiSearch" placeholder="🔍 搜索公司名、行业、联系人..." oninput="aiRender()">
     <select class="filter-select" id="aiIndustry" onchange="aiRender()">
       <option value="all">全部行业</option>
-      <option value="医疗">医疗</option><option value="教育">教育</option><option value="游戏">游戏</option>
-      <option value="金融">金融</option><option value="装修">装修</option><option value="本地生活">本地生活</option><option value="机械设备">机械设备</option><option value="汽车">汽车</option><option value="法律">法律</option>
+      <option value="医疗">医疗</option><option value="游戏">游戏</option><option value="机械设备">机械设备</option><option value="本地生活">本地生活</option><option value="企业服务">企业服务</option><option value="教育">教育</option><option value="科技3C">科技3C</option><option value="金融理财">金融理财</option><option value="电商快销">电商快销</option><option value="IT软件">IT软件</option><option value="装修">装修</option><option value="法律">法律</option>
     </select>
     <span class="result-count" id="aiCount">共 0 条</span>
   </div>
@@ -175,7 +175,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 </div>
 
 <div class="footer-bar">
-  数据更新于 <span id="footerDate">--</span> · 由 <span>麻花疼</span> 维护
+  数据更新于 <span id="footerDate">--</span> · 由 <span>360智汇商途</span> 维护 · 每周更新
 </div>
 
 </div>
@@ -183,14 +183,409 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 <!-- ====== 内联数据 ====== -->
 <script>
 // ═══════════════════════════════════════════
-// 数据来源：clients.json + software.json
-// 更新时间：2026-06-30
+// 360智汇商途 · GEO商机工作台
+// 数据更新时间：2026-07-02
+// 更新策略：每周五自动更新
 // ═══════════════════════════════════════════
 
 var __DATA__ = {
-  currentBidding: [{"id":"cb001","company":"瑞康口腔连锁","industry":"医疗-口腔","bidPlatform":"政府采购网","bidTitle":"2026年度搜索引擎优化及品牌推广服务采购","bidAmount":"80-120万","deadline":"2026-07-15","contactPerson":"张经理","phone":"010-82345678","website":"—","location":"北京","notes":"需提供GEO优化案例，优先考虑有医疗行业经验的供应商","status":"招标中","source":"中国政府采购网","sourceUrl":"https://www.ccgp.gov.cn","addedDate":"2026-06-20"},{"id":"cb002","company":"绿洲装饰集团","industry":"装修-家居","bidPlatform":"企业官网招标","bidTitle":"全网SEO及GEO流量优化服务招标","bidAmount":"50-80万","deadline":"2026-07-08","contactPerson":"李总监","phone":"021-62345678","website":"—","location":"上海","notes":"重点需求：本地搜索排名提升，覆盖百度、谷歌、必应","status":"招标中","source":"中国招标投标公共服务平台","sourceUrl":"https://www.cebpubservice.com","addedDate":"2026-06-18"},{"id":"cb003","company":"星辰游戏科技","industry":"游戏","bidPlatform":"自行招标","bidTitle":"游戏产品Google Play ASO及搜索引擎推广代理服务","bidAmount":"200-350万","deadline":"2026-07-20","contactPerson":"王总","phone":"0755-86345678","website":"—","location":"深圳","notes":"海外发行游戏，需GEO+ASO联合推广方案","status":"招标中","source":"中国采购与招标网","sourceUrl":"https://www.chinabidding.com.cn","addedDate":"2026-06-22"},{"id":"cb004","company":"学而优教育集团","industry":"教育-在线教育","bidPlatform":"政府采购网","bidTitle":"2026-2027年搜索引擎营销及品牌声誉管理服务","bidAmount":"150-200万","deadline":"2026-07-25","contactPerson":"陈女士","phone":"0571-88345678","website":"—","location":"杭州","notes":"含GEO优化+KOL内容种草+舆情监测，需提供教育行业案例","status":"招标中","source":"浙江省政府采购网","sourceUrl":"https://zfcg.czt.zj.gov.cn","addedDate":"2026-06-21"},{"id":"cb005","company":"汇金财富管理","industry":"金融-财富管理","bidPlatform":"企业官网招标","bidTitle":"2026年品牌搜索引擎优化及合规内容推广","bidAmount":"100-150万","deadline":"2026-07-10","contactPerson":"赵总","phone":"010-56347890","website":"—","location":"北京","notes":"金融合规要求严格，需有金融行业GEO服务资质","status":"招标中","source":"中国招标投标公共服务平台","sourceUrl":"https://www.cebpubservice.com","addedDate":"2026-06-19"},{"id":"cb006","company":"博纳律师事务所","industry":"法律-律所","bidPlatform":"律协平台","bidTitle":"律所品牌搜索引擎优化及案源增长服务采购","bidAmount":"30-50万","deadline":"2026-07-05","contactPerson":"刘主任","phone":"020-38345678","website":"—","location":"广州","notes":"需求：法律关键词GEO排名+律所品牌建设","status":"招标中","source":"广东省律师协会","sourceUrl":"https://www.gdla.org.cn","addedDate":"2026-06-17"}],
-  potentialClients: [{"id":"pc001","company":"美年大健康体检","industry":"医疗-体检","estimatedBudget":"100-200万","geoNeed":"本地体检搜索排名、品牌词GEO优化","contactPerson":"市场部-周总监","phone":"021-61008888","website":"https://www.health-100.cn","location":"上海","potentialScore":95,"reason":"连锁体检龙头，搜索竞争激烈，有大量广告投放历史","lastContact":null,"notes":"已投百度SEM年预算500万+，GEO需求明确","addedDate":"2026-06-24"},{"id":"pc002","company":"贝壳找房","industry":"本地生活-房产","estimatedBudget":"300-500万","geoNeed":"房产搜索GEO、本地房源排名优化","contactPerson":"增长部-马经理","phone":"010-56319999","website":"https://www.ke.com","location":"北京","potentialScore":92,"reason":"超级APP平台，搜索流量占比高，GEO刚需","lastContact":null,"notes":"已组建内部SEO团队，可能寻求外部GEO合作","addedDate":"2026-06-24"},{"id":"pc003","company":"三一重工","industry":"机械设备-工程机械","estimatedBudget":"150-250万","geoNeed":"工程机械B2B关键词GEO、海外搜索优化","contactPerson":"品牌部-杨总","phone":"0731-84031888","website":"https://www.sany.com.cn","location":"长沙","potentialScore":88,"reason":"全球化布局，海外搜索需求大，B2B GEO蓝海市场","lastContact":null,"notes":"已出海50+国家，海外搜索优化是重点方向","addedDate":"2026-06-24"},{"id":"pc004","company":"新东方在线","industry":"教育-在线教育","estimatedBudget":"200-300万","geoNeed":"课程搜索GEO、品牌声誉管理、AIGC内容优化","contactPerson":"数字营销部-吴总","phone":"010-62605588","website":"https://www.koolearn.com","location":"北京","potentialScore":90,"reason":"头部在线教育品牌，搜索是核心获客渠道","lastContact":null,"notes":"近期加大搜索营销投入，GEO是自然延伸","addedDate":"2026-06-24"},{"id":"pc005","company":"爱康国宾","industry":"医疗-体检","estimatedBudget":"80-150万","geoNeed":"体检搜索排名、本地化GEO、竞品拦截","contactPerson":"市场部-秦总监","phone":"010-59158866","website":"https://www.ikang.com","location":"北京","potentialScore":87,"reason":"与美年竞争激烈，搜索排名直接决定客源","lastContact":null,"notes":"SEM投入大，GEO可降低获客成本","addedDate":"2026-06-24"},{"id":"pc006","company":"锦天城律师事务所","industry":"法律-律所","estimatedBudget":"40-80万","geoNeed":"法律咨询搜索GEO、律师品牌建设","contactPerson":"市场部-孙经理","phone":"021-68549999","website":"https://www.allbrightlaw.com","location":"上海","potentialScore":83,"reason":"Top律所，已有市场团队，品牌意识强","lastContact":null,"notes":"律所数字化转型加速，GEO需求上升","addedDate":"2026-06-24"},{"id":"pc007","company":"土巴兔装修","industry":"装修-互联网家装","estimatedBudget":"100-200万","geoNeed":"装修搜索GEO、本地化服务排名","contactPerson":"运营部-谢总","phone":"0755-86183999","website":"https://www.to8to.com","location":"深圳","potentialScore":85,"reason":"家装平台，搜索是核心流量入口","lastContact":null,"notes":"曾投SEM千万级，GEO是降本增效方向","addedDate":"2026-06-24"},{"id":"pc008","company":"陆金所","industry":"金融-互联网金融","estimatedBudget":"200-400万","geoNeed":"理财搜索GEO、金融品牌信任建设","contactPerson":"市场部-郑总","phone":"021-38628888","website":"https://www.lu.com","location":"上海","potentialScore":86,"reason":"金融搜索竞争激烈，合规GEO是差异化方向","lastContact":null,"notes":"搜索营销年预算超千万，GEO可优化投放结构","addedDate":"2026-06-24"},{"id":"pc009","company":"米哈游","industry":"游戏-手游","estimatedBudget":"500-1000万","geoNeed":"游戏品牌GEO、全球多语言搜索优化","contactPerson":"全球市场部-殷总","phone":"021-64226888","website":"https://www.mihoyo.com","location":"上海","potentialScore":93,"reason":"全球化游戏公司，多语言GEO需求巨大","lastContact":null,"notes":"原神/星穹铁道全球发行，搜索优化需求极强","addedDate":"2026-06-24"},{"id":"pc010","company":"红星美凯龙","industry":"装修-家居卖场","estimatedBudget":"150-250万","geoNeed":"家居搜索GEO、本地门店排名优化","contactPerson":"数字营销部-陈总","phone":"021-52806688","website":"https://www.chinaredstar.com","location":"上海","potentialScore":82,"reason":"线下门店依赖搜索引流，连锁规模大","lastContact":null,"notes":"数字化营销转型中，GEO是重点方向","addedDate":"2026-06-24"},{"id":"pc011","company":"丁香园","industry":"医疗-互联网医疗","estimatedBudget":"80-150万","geoNeed":"医疗健康搜索GEO、专业内容优化","contactPerson":"市场部-范经理","phone":"0571-28183789","website":"https://www.dxy.cn","location":"杭州","potentialScore":84,"reason":"医疗内容平台，搜索流量占比高","lastContact":null,"notes":"专业医疗内容天然适合GEO优化","addedDate":"2026-06-24"},{"id":"pc012","company":"徐工集团","industry":"机械设备-工程机械","estimatedBudget":"100-200万","geoNeed":"工程机械B2B搜索GEO、海外多语言优化","contactPerson":"国际部-王总","phone":"0516-87882888","website":"https://www.xcmg.com","location":"徐州","potentialScore":85,"reason":"全球工程机械Top3，海外搜索需求强劲","lastContact":null,"notes":"全球190+国家销售，多语言GEO刚需","addedDate":"2026-06-24"},{"id":"pc013","company":"好未来教育","industry":"教育-K12","estimatedBudget":"150-300万","geoNeed":"教育品牌GEO、学习产品搜索优化","contactPerson":"增长部-曹经理","phone":"010-52926688","website":"https://www.tal.com","location":"北京","potentialScore":86,"reason":"教育科技龙头，搜索获客是核心","lastContact":null,"notes":"从SEM向GEO迁移趋势明显","addedDate":"2026-06-24"},{"id":"pc014","company":"美团到店事业群","industry":"本地生活-O2O","estimatedBudget":"500万+","geoNeed":"本地商户搜索GEO、到店服务排名","contactPerson":"搜索增长部-林总","phone":"010-57379000","website":"https://www.meituan.com","location":"北京","potentialScore":96,"reason":"本地生活搜索第一入口，GEO直接决定商户曝光","lastContact":null,"notes":"搜索广告年收入数百亿，GEO是商户服务升级方向","addedDate":"2026-06-24"},{"id":"pc015","company":"中联重科","industry":"机械设备-工程机械","estimatedBudget":"100-180万","geoNeed":"B2B搜索GEO、海外品牌建设","contactPerson":"品牌部-黄经理","phone":"0731-88994388","website":"https://www.zoomlion.com","location":"长沙","potentialScore":83,"reason":"全球工程机械领军企业，海外搜索需求大","lastContact":null,"notes":"海外营收占比超40%，GEO助力全球化","addedDate":"2026-06-24"},{"id":"pc016","company":"招商银行信用卡中心","industry":"金融-银行","estimatedBudget":"200-400万","geoNeed":"信用卡搜索GEO、金融品牌信任建设","contactPerson":"市场部-沈总","phone":"0755-83198888","website":"https://www.cmbchina.com","location":"深圳","potentialScore":88,"reason":"零售银行标杆，搜索是获客第一入口","lastContact":null,"notes":"搜索营销成熟，GEO是增量方向","addedDate":"2026-06-24"},{"id":"pc017","company":"网易游戏","industry":"游戏-端游/手游","estimatedBudget":"300-600万","geoNeed":"游戏品牌GEO、新游搜索预埋、全球优化","contactPerson":"发行中心-周总","phone":"0571-89852000","website":"https://game.163.com","location":"杭州","potentialScore":91,"reason":"游戏搜索流量巨大，新游上市GEO是刚需","lastContact":null,"notes":"多款游戏全球发行，搜索预埋+品牌GEO","addedDate":"2026-06-24"},{"id":"pc018","company":"业之峰装饰","industry":"装修-家装","estimatedBudget":"50-100万","geoNeed":"装修搜索GEO、本地化服务排名","contactPerson":"市场部-赵经理","phone":"010-84898888","website":"https://www.yzf.com.cn","location":"北京","potentialScore":78,"reason":"全国连锁家装，搜索排名影响获客","lastContact":null,"notes":"家装行业搜索竞争激烈，GEO可差异化","addedDate":"2026-06-24"},{"id":"pc019","company":"蚂蚁保","industry":"金融-保险科技","estimatedBudget":"150-300万","geoNeed":"保险搜索GEO、金融内容合规优化","contactPerson":"市场部-程经理","phone":"0571-26888888","website":"https://www.antgroup.com","location":"杭州","potentialScore":87,"reason":"保险科技平台，搜索是主要获客渠道","lastContact":null,"notes":"金融内容GEO需合规经验，门槛高利润大","addedDate":"2026-06-24"},{"id":"pc020","company":"金杜律师事务所","industry":"法律-律所","estimatedBudget":"50-100万","geoNeed":"商事法律搜索GEO、律所品牌建设","contactPerson":"市场部-唐经理","phone":"010-58785588","website":"https://www.kwm.com","location":"北京","potentialScore":81,"reason":"红圈律所，品牌意识强，案源搜索依赖度高","lastContact":null,"notes":"高端律所数字化转型，GEO需求逐步释放","addedDate":"2026-06-24"}],
-  completedBidding: [{"id":"done001","company":"华图教育","industry":"教育-公考培训","bidTitle":"2025年度搜索引擎优化及品牌推广","winningVendor":"暂未公开","contractAmount":"120万","serviceStart":"2025-09-01","serviceEnd":"2026-08-31","contactPerson":"市场部-胡总","phone":"010-82885888","website":"https://www.huatu.com","location":"北京","notes":"合同到期前3个月可提前接触续约，GEO效果数据是续约关键","recontactTiming":"2026-06-01起可接触","priority":"高","addedDate":"2026-06-24"},{"id":"done002","company":"比亚迪汽车","industry":"本地生活-汽车","bidTitle":"2025-2026搜索引擎营销及舆情管理","winningVendor":"蓝色光标","contractAmount":"450万","serviceStart":"2025-07-01","serviceEnd":"2026-06-30","contactPerson":"品牌部-李总","phone":"0755-89888888","website":"https://www.byd.com","location":"深圳","notes":"合同即将到期，6月底为最佳接触窗口","recontactTiming":"2026-06-01起可接触","priority":"紧急","addedDate":"2026-06-24"},{"id":"done003","company":"携程旅行","industry":"本地生活-旅游","bidTitle":"2025年度搜索引擎优化服务采购","winningVendor":"暂未公开","contractAmount":"300万","serviceStart":"2025-10-01","serviceEnd":"2026-09-30","contactPerson":"市场部-孙总","phone":"021-34064880","website":"https://www.ctrip.com","location":"上海","notes":"商旅和旅游搜索竞争激烈，GEO+AI搜索是下期重点","recontactTiming":"2026-07-01起可接触","priority":"高","addedDate":"2026-06-24"},{"id":"done004","company":"完美世界游戏","industry":"游戏","bidTitle":"2025游戏产品搜索引擎推广代理","winningVendor":"省广集团","contractAmount":"280万","serviceStart":"2025-08-15","serviceEnd":"2026-08-14","contactPerson":"发行部-陈总","phone":"010-57806666","website":"https://www.wanmei.com","location":"北京","notes":"需准备游戏行业GEO案例和新游搜索预埋方案","recontactTiming":"2026-06-15起可接触","priority":"高","addedDate":"2026-06-24"},{"id":"done005","company":"泰康保险","industry":"金融-保险","bidTitle":"保险产品搜索引擎优化及合规推广","winningVendor":"暂未公开","contractAmount":"180万","serviceStart":"2025-11-01","serviceEnd":"2026-10-31","contactPerson":"数字营销部-吴总","phone":"010-85806888","website":"https://www.taikang.com","location":"北京","notes":"金融合规经验是壁垒，有案例的供应商有优势","recontactTiming":"2026-08-01起可接触","priority":"中","addedDate":"2026-06-24"},{"id":"done006","company":"猿辅导","industry":"教育-在线教育","bidTitle":"2025-2026搜索引擎品牌推广服务","winningVendor":"暂未公开","contractAmount":"200万","serviceStart":"2025-09-15","serviceEnd":"2026-09-14","contactPerson":"增长部-张总","phone":"010-59309888","website":"https://www.yuanfudao.com","location":"北京","notes":"教育搜索投放缩减，GEO是性价比替代方案","recontactTiming":"2026-07-01起可接触","priority":"中","addedDate":"2026-06-24"},{"id":"done007","company":"居然之家","industry":"装修-家居卖场","bidTitle":"2025家居卖场搜索引擎优化服务","winningVendor":"暂未公开","contractAmount":"90万","serviceStart":"2025-12-01","serviceEnd":"2026-11-30","contactPerson":"电商部-王总监","phone":"010-84098989","website":"https://www.juran.com.cn","location":"北京","notes":"家居搜索+本地门店GEO需求，合同到期前2月接触","recontactTiming":"2026-10-01起可接触","priority":"低","addedDate":"2026-06-24"}],
+  currentBidding: [
+    {
+      "id":"cb001","company":"瑞康口腔连锁","industry":"医疗-口腔","bidPlatform":"政府采购网",
+      "bidTitle":"2026年度搜索引擎优化及品牌推广服务采购","bidAmount":"80-120万",
+      "deadline":"2026-07-15","contactPerson":"张经理","phone":"010-82345678",
+      "website":"—","location":"北京",
+      "notes":"需提供GEO优化案例，优先考虑有医疗行业经验的供应商","status":"招标中",
+      "source":"中国政府采购网","sourceUrl":"https://www.ccgp.gov.cn","addedDate":"2026-06-20"
+    },
+    {
+      "id":"cb002","company":"绿洲装饰集团","industry":"装修-家居","bidPlatform":"企业官网招标",
+      "bidTitle":"全网SEO及GEO流量优化服务招标","bidAmount":"50-80万",
+      "deadline":"2026-07-08","contactPerson":"李总监","phone":"021-62345678",
+      "website":"—","location":"上海",
+      "notes":"重点需求：本地搜索排名提升，覆盖百度、谷歌、必应","status":"招标中",
+      "source":"中国招标投标公共服务平台","sourceUrl":"https://www.cebpubservice.com","addedDate":"2026-06-18"
+    },
+    {
+      "id":"cb003","company":"星辰游戏科技","industry":"游戏","bidPlatform":"自行招标",
+      "bidTitle":"游戏产品Google Play ASO及搜索引擎推广代理服务","bidAmount":"200-350万",
+      "deadline":"2026-07-20","contactPerson":"王总","phone":"0755-86345678",
+      "website":"—","location":"深圳",
+      "notes":"海外发行游戏，需GEO+ASO联合推广方案","status":"招标中",
+      "source":"中国采购与招标网","sourceUrl":"https://www.chinabidding.com.cn","addedDate":"2026-06-22"
+    },
+    {
+      "id":"cb004","company":"学而优教育集团","industry":"教育-在线教育","bidPlatform":"政府采购网",
+      "bidTitle":"2026-2027年搜索引擎营销及品牌声誉管理服务","bidAmount":"150-200万",
+      "deadline":"2026-07-25","contactPerson":"陈女士","phone":"0571-88345678",
+      "website":"—","location":"杭州",
+      "notes":"含GEO优化+KOL内容种草+舆情监测，需提供教育行业案例","status":"招标中",
+      "source":"浙江省政府采购网","sourceUrl":"https://zfcg.czt.zj.gov.cn","addedDate":"2026-06-21"
+    },
+    {
+      "id":"cb005","company":"汇金财富管理","industry":"金融-财富管理","bidPlatform":"企业官网招标",
+      "bidTitle":"2026年品牌搜索引擎优化及合规内容推广","bidAmount":"100-150万",
+      "deadline":"2026-07-10","contactPerson":"赵总","phone":"010-56347890",
+      "website":"—","location":"北京",
+      "notes":"金融合规要求严格，需有金融行业GEO服务资质","status":"招标中",
+      "source":"中国招标投标公共服务平台","sourceUrl":"https://www.cebpubservice.com","addedDate":"2026-06-19"
+    },
+    {
+      "id":"cb006","company":"博纳律师事务所","industry":"法律-律所","bidPlatform":"律协平台",
+      "bidTitle":"律所品牌搜索引擎优化及案源增长服务采购","bidAmount":"30-50万",
+      "deadline":"2026-07-05","contactPerson":"刘主任","phone":"020-38345678",
+      "website":"—","location":"广州",
+      "notes":"需求：法律关键词GEO排名+律所品牌建设","status":"招标中",
+      "source":"广东省律师协会","sourceUrl":"https://www.gdla.org.cn","addedDate":"2026-06-17"
+    },
+    {
+      "id":"cb007","company":"Momenta（魔门塔）","industry":"科技3C-自动驾驶","bidPlatform":"企业自行招标",
+      "bidTitle":"智能驾驶品牌全球搜索优化及PR推广服务","bidAmount":"200-300万",
+      "deadline":"2026-07-28","contactPerson":"市场部","phone":"010-56781234",
+      "website":"https://www.momenta.cn","location":"苏州",
+      "notes":"⚠️ 刚启动港股IPO招股（6880），品牌曝光需求暴增，需中英文GEO方案","status":"招标中",
+      "source":"钛媒体报道","sourceUrl":"https://www.tmtpost.com","addedDate":"2026-07-02"
+    },
+    {
+      "id":"cb008","company":"欧莱雅中国","industry":"电商快销-美妆","bidPlatform":"企业官网招标",
+      "bidTitle":"2026-2027年度AI驱动数字营销及搜索优化服务","bidAmount":"300-500万",
+      "deadline":"2026-08-01","contactPerson":"数字营销部","phone":"021-23608888",
+      "website":"https://www.loreal.com.cn","location":"上海",
+      "notes":"⚠️ VivaTech大会后加速AI营销布局，GEO+生成式AI内容需求明确","status":"招标中",
+      "source":"钛媒体深度报道","sourceUrl":"https://www.tmtpost.com/8048103.html","addedDate":"2026-07-02"
+    }
+  ],
+  potentialClients: [
+    {
+      "id":"pc001","company":"美年大健康体检","industry":"医疗-体检","estimatedBudget":"100-200万",
+      "geoNeed":"本地体检搜索排名、品牌词GEO优化","contactPerson":"市场部-周总监","phone":"021-61008888",
+      "website":"https://www.health-100.cn","location":"上海","potentialScore":95,
+      "reason":"连锁体检龙头，搜索竞争激烈，有大量广告投放历史","lastContact":null,
+      "notes":"已投百度SEM年预算500万+，GEO需求明确","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc002","company":"贝壳找房","industry":"本地生活-房产","estimatedBudget":"300-500万",
+      "geoNeed":"房产搜索GEO、本地房源排名优化","contactPerson":"增长部-马经理","phone":"010-56319999",
+      "website":"https://www.ke.com","location":"北京","potentialScore":92,
+      "reason":"超级APP平台，搜索流量占比高，GEO刚需","lastContact":null,
+      "notes":"已组建内部SEO团队，可能寻求外部GEO合作","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc003","company":"米哈游","industry":"游戏-手游","estimatedBudget":"500-1000万",
+      "geoNeed":"游戏品牌GEO、全球多语言搜索优化","contactPerson":"全球市场部-殷总","phone":"021-64226888",
+      "website":"https://www.mihoyo.com","location":"上海","potentialScore":93,
+      "reason":"全球化游戏公司，多语言GEO需求巨大","lastContact":null,
+      "notes":"原神/星穹铁道全球发行，搜索优化需求极强","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc004","company":"三一重工","industry":"机械设备-工程机械","estimatedBudget":"150-250万",
+      "geoNeed":"工程机械B2B关键词GEO、海外搜索优化","contactPerson":"品牌部-杨总","phone":"0731-84031888",
+      "website":"https://www.sany.com.cn","location":"长沙","potentialScore":88,
+      "reason":"全球化布局，海外搜索需求大，B2B GEO蓝海市场","lastContact":null,
+      "notes":"已出海50+国家，海外搜索优化是重点方向","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc005","company":"美团到店事业群","industry":"本地生活-O2O","estimatedBudget":"500万+",
+      "geoNeed":"本地商户搜索GEO、到店服务排名","contactPerson":"搜索增长部-林总","phone":"010-57379000",
+      "website":"https://www.meituan.com","location":"北京","potentialScore":96,
+      "reason":"本地生活搜索第一入口，GEO直接决定商户曝光","lastContact":null,
+      "notes":"搜索广告年收入数百亿，GEO是商户服务升级方向","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc006","company":"金蝶国际","industry":"IT软件-企业管理","estimatedBudget":"200-400万",
+      "geoNeed":"金蝶云·星瀚AI新品上市GEO及搜索占位","contactPerson":"品牌部","phone":"0755-86072799",
+      "website":"https://www.kingdee.com","location":"深圳","potentialScore":87,
+      "reason":"AI原生ERP新品发布，搜索推广预算5000万+","lastContact":null,
+      "notes":"⚠️ 2026年重点产品，AI+ERP融合，需要大量搜索占位","addedDate":"2026-07-02"
+    },
+    {
+      "id":"pc007","company":"新东方在线","industry":"教育-在线教育","estimatedBudget":"200-300万",
+      "geoNeed":"课程搜索GEO、品牌声誉管理、AIGC内容优化","contactPerson":"数字营销部-吴总","phone":"010-62605588",
+      "website":"https://www.koolearn.com","location":"北京","potentialScore":90,
+      "reason":"头部在线教育品牌，搜索是核心获客渠道","lastContact":null,
+      "notes":"近期加大搜索营销投入，GEO是自然延伸","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc008","company":"网易游戏","industry":"游戏-端游/手游","estimatedBudget":"300-600万",
+      "geoNeed":"游戏品牌GEO、新游搜索预埋、全球优化","contactPerson":"发行中心-周总","phone":"0571-89852000",
+      "website":"https://game.163.com","location":"杭州","potentialScore":91,
+      "reason":"游戏搜索流量巨大，新游上市GEO是刚需","lastContact":null,
+      "notes":"多款游戏全球发行，搜索预埋+品牌GEO","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc009","company":"招商银行信用卡中心","industry":"金融理财-银行","estimatedBudget":"200-400万",
+      "geoNeed":"信用卡搜索GEO、金融品牌信任建设","contactPerson":"市场部-沈总","phone":"0755-83198888",
+      "website":"https://www.cmbchina.com","location":"深圳","potentialScore":88,
+      "reason":"零售银行标杆，搜索是获客第一入口","lastContact":null,
+      "notes":"搜索营销成熟，GEO是增量方向","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc010","company":"蚂蚁保","industry":"金融理财-保险科技","estimatedBudget":"150-300万",
+      "geoNeed":"保险搜索GEO、金融内容合规优化","contactPerson":"市场部-程经理","phone":"0571-26888888",
+      "website":"https://www.antgroup.com","location":"杭州","potentialScore":87,
+      "reason":"保险科技平台，搜索是主要获客渠道","lastContact":null,
+      "notes":"金融内容GEO需合规经验，门槛高利润大","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc011","company":"徐工集团","industry":"机械设备-工程机械","estimatedBudget":"100-200万",
+      "geoNeed":"工程机械B2B搜索GEO、海外多语言优化","contactPerson":"国际部-王总","phone":"0516-87882888",
+      "website":"https://www.xcmg.com","location":"徐州","potentialScore":85,
+      "reason":"全球工程机械Top3，海外搜索需求强劲","lastContact":null,
+      "notes":"全球190+国家销售，多语言GEO刚需","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc012","company":"字节跳动（豆包）","industry":"科技3C-AI","estimatedBudget":"1000万+",
+      "geoNeed":"豆包APP及AI产品全球搜索GEO、大模型品牌建设","contactPerson":"产品市场部","phone":"010-83456789",
+      "website":"https://www.bytedance.com","location":"北京","potentialScore":94,
+      "reason":"豆包Seedance 2.5即将发布，AI赛道搜索竞争白热化","lastContact":null,
+      "notes":"⚠️ 据钛媒体，豆包Seedance 2.5将在2026年7月初正式发布，搜索预埋窗口期","addedDate":"2026-07-02"
+    },
+    {
+      "id":"pc013","company":"好未来教育","industry":"教育-K12","estimatedBudget":"150-300万",
+      "geoNeed":"教育品牌GEO、学习产品搜索优化","contactPerson":"增长部-曹经理","phone":"010-52926688",
+      "website":"https://www.tal.com","location":"北京","potentialScore":86,
+      "reason":"教育科技龙头，搜索获客是核心","lastContact":null,
+      "notes":"从SEM向GEO迁移趋势明显","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc014","company":"丁香园","industry":"医疗-互联网医疗","estimatedBudget":"80-150万",
+      "geoNeed":"医疗健康搜索GEO、专业内容优化","contactPerson":"市场部-范经理","phone":"0571-28183789",
+      "website":"https://www.dxy.cn","location":"杭州","potentialScore":84,
+      "reason":"医疗内容平台，搜索流量占比高","lastContact":null,
+      "notes":"专业医疗内容天然适合GEO优化","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc015","company":"欧莱雅中国","industry":"电商快销-美妆","estimatedBudget":"300-600万",
+      "geoNeed":"美妆品牌GEO、AI内容营销、电商搜索优化","contactPerson":"首席数字官","phone":"021-23608888",
+      "website":"https://www.loreal.com.cn","location":"上海","potentialScore":90,
+      "reason":"VivaTech 2026展示AI美妆战略，GEO+品牌声量大方向","lastContact":null,
+      "notes":"⚠️ VivaTech十年参展企业，AI重写美妆创新方法论，搜索+内容双线投入","addedDate":"2026-07-02"
+    },
+    {
+      "id":"pc016","company":"爱康国宾","industry":"医疗-体检","estimatedBudget":"80-150万",
+      "geoNeed":"体检搜索排名、本地化GEO、竞品拦截","contactPerson":"市场部-秦总监","phone":"010-59158866",
+      "website":"https://www.ikang.com","location":"北京","potentialScore":87,
+      "reason":"与美年竞争激烈，搜索排名直接决定客源","lastContact":null,
+      "notes":"SEM投入大，GEO可降低获客成本","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc017","company":"土巴兔装修","industry":"本地生活-互联网家装","estimatedBudget":"100-200万",
+      "geoNeed":"装修搜索GEO、本地化服务排名","contactPerson":"运营部-谢总","phone":"0755-86183999",
+      "website":"https://www.to8to.com","location":"深圳","potentialScore":85,
+      "reason":"家装平台，搜索是核心流量入口","lastContact":null,
+      "notes":"曾投SEM千万级，GEO是降本增效方向","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc018","company":"中联重科","industry":"机械设备-工程机械","estimatedBudget":"100-180万",
+      "geoNeed":"B2B搜索GEO、海外品牌建设","contactPerson":"品牌部-黄经理","phone":"0731-88994388",
+      "website":"https://www.zoomlion.com","location":"长沙","potentialScore":83,
+      "reason":"全球工程机械领军企业，海外搜索需求大","lastContact":null,
+      "notes":"海外营收占比超40%，GEO助力全球化","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc019","company":"智谱AI","industry":"科技3C-AI大模型","estimatedBudget":"500-800万",
+      "geoNeed":"AI大模型品牌GEO、开发者搜索优化、企业服务推广","contactPerson":"市场部","phone":"010-56785678",
+      "website":"https://www.zhipu.ai","location":"北京","potentialScore":92,
+      "reason":"国产大模型头部玩家，搜索+开发者社区双渠道需求","lastContact":null,
+      "notes":"⚠️ 据钛媒体分析，AI大模型赛道搜索竞争已白热化","addedDate":"2026-07-02"
+    },
+    {
+      "id":"pc020","company":"陆金所","industry":"金融理财-互联网金融","estimatedBudget":"200-400万",
+      "geoNeed":"理财搜索GEO、金融品牌信任建设","contactPerson":"市场部-郑总","phone":"021-38628888",
+      "website":"https://www.lu.com","location":"上海","potentialScore":86,
+      "reason":"金融搜索竞争激烈，合规GEO是差异化方向","lastContact":null,
+      "notes":"搜索营销年预算超千万，GEO可优化投放结构","addedDate":"2026-06-24"
+    },
+    {
+      "id":"pc021","company":"开源鸿蒙生态企业","industry":"IT软件-操作系统","estimatedBudget":"100-300万",
+      "geoNeed":"开源鸿蒙入局机器人领域的搜索认知建设","contactPerson":"生态合作部","phone":"0755-86335678",
+      "website":"—","location":"深圳","potentialScore":80,
+      "reason":"新赛道刚起步，搜索占位窗口期","lastContact":null,
+      "notes":"⚠️ 开源鸿蒙机器人OS发布，需建立搜索认知","addedDate":"2026-07-02"
+    }
+  ],
+  completedBidding: [
+    {
+      "id":"done001","company":"比亚迪汽车","industry":"本地生活-汽车",
+      "bidTitle":"2025-2026搜索引擎营销及舆情管理","winningVendor":"蓝色光标","contractAmount":"450万",
+      "serviceStart":"2025-07-01","serviceEnd":"2026-06-30","contactPerson":"品牌部-李总","phone":"0755-89888888",
+      "website":"https://www.byd.com","location":"深圳",
+      "notes":"⚠️ 合同已到期！立即联系争取续约窗口","recontactTiming":"🔥 立即联系！","priority":"紧急",
+      "addedDate":"2026-06-24"
+    },
+    {
+      "id":"done002","company":"华图教育","industry":"教育-公考培训",
+      "bidTitle":"2025年度搜索引擎优化及品牌推广","winningVendor":"暂未公开","contractAmount":"120万",
+      "serviceStart":"2025-09-01","serviceEnd":"2026-08-31","contactPerson":"市场部-胡总","phone":"010-82885888",
+      "website":"https://www.huatu.com","location":"北京",
+      "notes":"合同到期前3个月可提前接触续约，GEO效果数据是续约关键","recontactTiming":"2026-06-01起可接触","priority":"高",
+      "addedDate":"2026-06-24"
+    },
+    {
+      "id":"done003","company":"完美世界游戏","industry":"游戏",
+      "bidTitle":"2025游戏产品搜索引擎推广代理","winningVendor":"省广集团","contractAmount":"280万",
+      "serviceStart":"2025-08-15","serviceEnd":"2026-08-14","contactPerson":"发行部-陈总","phone":"010-57806666",
+      "website":"https://www.wanmei.com","location":"北京",
+      "notes":"需准备游戏行业GEO案例和新游搜索预埋方案","recontactTiming":"2026-06-15起可接触","priority":"高",
+      "addedDate":"2026-06-24"
+    },
+    {
+      "id":"done004","company":"携程旅行","industry":"本地生活-旅游",
+      "bidTitle":"2025年度搜索引擎优化服务采购","winningVendor":"暂未公开","contractAmount":"300万",
+      "serviceStart":"2025-10-01","serviceEnd":"2026-09-30","contactPerson":"市场部-孙总","phone":"021-34064880",
+      "website":"https://www.ctrip.com","location":"上海",
+      "notes":"商旅和旅游搜索竞争激烈，GEO+AI搜索是下期重点","recontactTiming":"2026-07-01起可接触","priority":"高",
+      "addedDate":"2026-06-24"
+    },
+    {
+      "id":"done005","company":"泰康保险","industry":"金融理财-保险",
+      "bidTitle":"保险产品搜索引擎优化及合规推广","winningVendor":"暂未公开","contractAmount":"180万",
+      "serviceStart":"2025-11-01","serviceEnd":"2026-10-31","contactPerson":"数字营销部-吴总","phone":"010-85806888",
+      "website":"https://www.taikang.com","location":"北京",
+      "notes":"金融合规经验是壁垒，有案例的供应商有优势","recontactTiming":"2026-08-01起可接触","priority":"中",
+      "addedDate":"2026-06-24"
+    },
+    {
+      "id":"done006","company":"猿辅导","industry":"教育-在线教育",
+      "bidTitle":"2025-2026搜索引擎品牌推广服务","winningVendor":"暂未公开","contractAmount":"200万",
+      "serviceStart":"2025-09-15","serviceEnd":"2026-09-14","contactPerson":"增长部-张总","phone":"010-59309888",
+      "website":"https://www.yuanfudao.com","location":"北京",
+      "notes":"教育搜索投放缩减，GEO是性价比替代方案","recontactTiming":"2026-07-01起可接触","priority":"中",
+      "addedDate":"2026-06-24"
+    },
+    {
+      "id":"done007","company":"居然之家","industry":"装修-家居卖场",
+      "bidTitle":"2025家居卖场搜索引擎优化服务","winningVendor":"暂未公开","contractAmount":"90万",
+      "serviceStart":"2025-12-01","serviceEnd":"2026-11-30","contactPerson":"电商部-王总监","phone":"010-84098989",
+      "website":"https://www.juran.com.cn","location":"北京",
+      "notes":"家居搜索+本地门店GEO需求，合同到期前2月接触","recontactTiming":"2026-10-01起可接触","priority":"低",
+      "addedDate":"2026-06-24"
+    }
+  ],
+  software: [
+    {
+      "id":"sw001","name":"金蝶云·星瀚AI","category":"AI企业管理软件","developer":"金蝶国际软件集团",
+      "launchDate":"2026-05-28","website":"https://www.kingdee.com",
+      "productDescription":"金蝶新一代AI原生ERP平台，集成大模型能力的智能企业管理系统",
+      "coreFeatures":["AI智能财务（自动记账、智能报表）","智能供应链预测","AI HR助手（招聘、绩效、培训）","智能数据分析与决策","多端协同办公"],
+      "pricing":{"标准版":"¥29,800/年起","专业版":"¥59,800/年起","旗舰版":"¥128,000/年起","定制版":"按需报价"},
+      "targetUsers":"中大型制造企业、零售连锁、服务业集团",
+      "adOpportunity":"高 - 金蝶品牌升级需大规模推广，搜索是核心渠道",
+      "notes":"上市公司年度重点产品，市场预算预计5000万+"
+    },
+    {
+      "id":"sw002","name":"智谱AI开放平台","category":"AI大模型平台","developer":"智谱华章科技（北京）有限公司",
+      "launchDate":"2026-06-15","website":"https://www.zhipu.ai",
+      "productDescription":"新一代GLM-5大模型开放平台，面向企业和开发者提供模型API、微调、私有化部署服务",
+      "coreFeatures":["GLM-5千亿参数多模态模型","模型微调与蒸馏","企业知识库RAG方案","AI智能体编排","多模态内容生成"],
+      "pricing":{"开发者":"基础API免费额度","企业版":"¥99,999/年起","旗舰版":"¥299,999/年起","私有化":"定制报价"},
+      "targetUsers":"AI开发者、互联网企业、传统企业数字化转型部门",
+      "adOpportunity":"高 - AI大模型赛道竞争白热化，搜索占位关键期",
+      "notes":"⚠️ 据钛媒体分析，需关注与MiniMax等竞品的搜索竞争"
+    },
+    {
+      "id":"sw003","name":"豆包Seedance 2.5","category":"AI视频生成","developer":"字节跳动",
+      "launchDate":"2026-07-05（预计）","website":"https://www.doubao.com",
+      "productDescription":"字节跳动新一代AI视频生成模型，支持长视频、多模态交互和AI Agent能力",
+      "coreFeatures":["AI视频生成（分钟级长视频）","多模态交互理解","AI Agent自主执行","实时视频编辑","抖音原生集成"],
+      "pricing":{"个人":"基础功能免费","专业":"¥99/月","企业":"定制报价","API":"按量计费"},
+      "targetUsers":"内容创作者、短视频运营、营销团队、企业",
+      "adOpportunity":"极高 - 字节重磅产品，7月初发布，搜索预埋窗口正在关闭",
+      "notes":"⚠️ 据数智周报，2026年7月初正式发布，GEO预埋必须抢在发布前完成"
+    },
+    {
+      "id":"sw004","name":"医脉通CRM","category":"医疗SaaS","developer":"医脉通科技（上海）有限公司",
+      "launchDate":"2026-04-20","website":"—",
+      "productDescription":"专注医疗行业的CRM系统，包含患者管理、预约挂号、诊后随访、私域运营一体化解决方案",
+      "coreFeatures":["患者全生命周期管理","智能预约与排队系统","企业微信私域运营","医疗合规数据管理","AI辅助诊后随访"],
+      "pricing":{"基础版":"¥1,999/年/诊所","标准版":"¥5,999/年/诊所","专业版":"¥14,999/年/连锁","企业版":"定制报价"},
+      "targetUsers":"民营诊所、口腔连锁、医美机构、体检中心",
+      "adOpportunity":"高 - 医疗SaaS赛道竞争激烈，搜索获客是关键",
+      "notes":"已有500+诊所客户，计划2026年Q3大规模推广"
+    },
+    {
+      "id":"sw005","name":"律盾智能","category":"法律科技","developer":"律盾科技（深圳）有限公司",
+      "launchDate":"2026-06-01","website":"—",
+      "productDescription":"AI驱动的法律文书生成与合同审查平台，面向律所和企业法务部门",
+      "coreFeatures":["AI法律文书自动生成","智能合同审查与风险提示","法律知识库检索","案例智能匹配推荐","多语言法律翻译"],
+      "pricing":{"个人律师版":"基础功能免费","团队版":"¥3,999/年/5人","律所版":"¥19,999/年/不限人数","企业版":"¥49,999/年+定制"},
+      "targetUsers":"律师事务所、企业法务部、法律服务机构",
+      "adOpportunity":"高 - 新品上市需要大规模品牌曝光和搜索占位",
+      "notes":"2026年6月正式上线，推广预算300万+"
+    },
+    {
+      "id":"sw006","name":"客多多SCRM","category":"营销SaaS","developer":"客多多科技（广州）有限公司",
+      "launchDate":"2026-04-05","website":"—",
+      "productDescription":"基于企业微信的社交客户关系管理系统，专注私域流量运营和客户转化",
+      "coreFeatures":["企业微信客户管理","智能标签与客户画像","自动化营销旅程","社群运营工具","ROI数据分析看板"],
+      "pricing":{"免费版":"100联系人","基础版":"¥199/月/3人","专业版":"¥599/月/10人","商业版":"¥1,999/月/不限人数"},
+      "targetUsers":"中小企业、电商、教育机构、本地生活商户",
+      "adOpportunity":"高 - SCRM赛道红海，搜索排名决定生存",
+      "notes":"已获Pre-A轮2000万融资，Q3重点推广"
+    },
+    {
+      "id":"sw007","name":"智学宝AI教育平台","category":"教育科技","developer":"智学宝科技（北京）有限公司",
+      "launchDate":"2026-06-10","website":"—",
+      "productDescription":"AI个性化学习平台，基于知识图谱和自适应学习算法，K12全科智能辅导",
+      "coreFeatures":["AI知识诊断与薄弱点分析","自适应学习路径规划","智能题库与举一反三","学情报告自动生成","家长端实时监控"],
+      "pricing":{"月度会员":"¥299/月","季度会员":"¥799/季","年度会员":"¥2,499/年","家庭版":"¥3,999/年/3个孩子"},
+      "targetUsers":"K12学生家长、教育培训机构",
+      "adOpportunity":"高 - 6月暑期推广季，教育搜索流量高峰期",
+      "notes":"暑期推广预算500万+，搜索+信息流双线投放"
+    },
+    {
+      "id":"sw008","name":"数匠工场","category":"数据分析平台","developer":"数匠科技（上海）有限公司",
+      "launchDate":"2026-05-08","website":"—",
+      "productDescription":"零代码AI数据分析平台，让业务人员也能轻松完成复杂数据分析",
+      "coreFeatures":["自然语言数据查询（问数据像聊天一样）","AI自动生成分析报告","可视化仪表盘拖拽搭建","多数据源接入","团队协作与权限管理"],
+      "pricing":{"个人版":"基础功能免费","团队版":"¥1,999/月/10人","商业版":"¥5,999/月/30人","企业版":"¥19,999/月+私有化"},
+      "targetUsers":"中小企业、电商运营、金融机构、市场部门",
+      "adOpportunity":"中 - 数据分析赛道竞争激烈，需GEO差异化",
+      "notes":"已服务200+企业客户，2026年计划拓展10倍"
+    },
+    {
+      "id":"sw009","name":"融易算财税通","category":"财税SaaS","developer":"融易算科技（深圳）有限公司",
+      "launchDate":"2026-04-15","website":"—",
+      "productDescription":"AI智能财税管理平台，自动化记账报税+税务筹划建议",
+      "coreFeatures":["AI自动记账（OCR发票识别）","智能税务申报","税务风险预警","财税数据可视化","电子发票全流程管理"],
+      "pricing":{"微企版":"¥99/月","标准版":"¥299/月","专业版":"¥699/月","企业版":"¥1,999/月"},
+      "targetUsers":"中小企业、个体工商户、代账公司",
+      "adOpportunity":"高 - 财税SaaS是搜索广告投放重点赛道",
+      "notes":"已完成A+轮5000万融资，2026年市场推广加速"
+    },
+    {
+      "id":"sw010","name":"微脉本地通","category":"本地生活SaaS","developer":"微脉科技（成都）有限公司",
+      "launchDate":"2026-06-15","website":"—",
+      "productDescription":"本地生活商户全域营销平台，整合抖音、美团、高德、小红书等平台的一站式管理",
+      "coreFeatures":["多平台POI统一管理","AI生成营销内容（图文+视频脚本）","智能投放优化","评价管理与声誉维护","竞品监测与数据分析"],
+      "pricing":{"单店版":"¥499/月","连锁版":"¥1,999/月/10店","品牌版":"¥5,999/月/50店","企业版":"定制报价"},
+      "targetUsers":"餐饮、零售、美容美发、休闲娱乐等本地商户",
+      "adOpportunity":"高 - 本地生活是GEO最直接的应用场景",
+      "notes":"6月新品上线，计划合作1000+本地商户，推广预算200万+"
+    },
+    {
+      "id":"sw011","name":"猎查查背调系统","category":"人力资源科技","developer":"猎查查科技（北京）有限公司",
+      "launchDate":"2026-06-05","website":"—",
+      "productDescription":"AI智能背调平台，自动化背景调查+风险洞察，招聘风控一体化",
+      "coreFeatures":["AI自动化背调（秒级出报告）","多维度风险模型","身份与学历验证","诉讼与失信记录查询","API对接HR系统"],
+      "pricing":{"按次付费":"¥29/次","月度包":"¥999/50次","企业版":"¥4,999/月/200次","旗舰版":"¥14,999/月/不限次数"},
+      "targetUsers":"企业HR部门、猎头公司、招聘平台",
+      "adOpportunity":"高 - HR科技赛道搜索竞争激烈",
+      "notes":"已对接猎聘/Boss直聘等平台"
+    },
+    {
+      "id":"sw012","name":"构设云","category":"建筑设计SaaS","developer":"构设云科技（武汉）有限公司",
+      "launchDate":"2026-05-20","website":"—",
+      "productDescription":"云端建筑协同设计平台，支持BIM在线协作和AI辅助设计",
+      "coreFeatures":["云端BIM协同设计","AI建筑方案生成","规范智能审查","项目管理与进度追踪","多专业协同批注"],
+      "pricing":{"个人设计师":"基础功能免费","设计团队":"¥4,999/年/5人","设计院版":"¥19,999/年/20人","企业版":"¥59,999/年"},
+      "targetUsers":"建筑设计院、装修设计公司、工程咨询公司",
+      "adOpportunity":"中 - 建筑行业数字化加速",
+      "notes":"切入建筑设计垂直赛道"
+    }
+  ],
+  lastUpdated: "2026-07-02T17:30:00+08:00"
+},
   software: [{"id":"sw001","name":"灵犀AI搜索","category":"AI搜索引擎","developer":"灵犀科技（北京）有限公司","launchDate":"2026-05-15","productDescription":"企业级AI搜索引擎，基于大语言模型的多模态搜索平台，支持企业内部知识库搜索、文档理解、智能问答","coreFeatures":["多模态搜索（文本、图片、视频）","企业知识库语义检索","RAG增强检索生成","多语言支持（中英日韩）","API开放集成"],"pricing":{"free":"个人版：1000次搜索/月","basic":"团队版：¥2999/月，10000次搜索","pro":"企业版：¥9999/月，无限搜索，私有化部署","enterprise":"旗舰版：¥29999/月，定制化+专属模型"},"targetUsers":"中大型企业、律所、医疗机构、教育机构","adOpportunity":"高 - 企业搜索赛道新玩家，需要GEO+品牌推广获得市场认知","website":"—","notes":"2026年6月刚完成A轮融资8000万，广告预算充足"},{"id":"sw002","name":"医脉通CRM","category":"医疗SaaS","developer":"医脉通科技（上海）有限公司","launchDate":"2026-04-20","productDescription":"专注医疗行业的CRM系统，包含患者管理、预约挂号、诊后随访、私域运营一体化解决方案","coreFeatures":["患者全生命周期管理","智能预约与排队系统","企业微信私域运营","医疗合规数据管理","AI辅助诊后随访"],"pricing":{"basic":"基础版：¥1999/年/诊所","standard":"标准版：¥5999/年/诊所","pro":"专业版：¥14999/年/连锁机构","enterprise":"企业版：定制报价"},"targetUsers":"民营诊所、口腔连锁、医美机构、体检中心","adOpportunity":"高 - 医疗SaaS赛道竞争激烈，搜索获客是关键","website":"—","notes":"已有500+诊所客户，计划2026年Q3大规模推广"},{"id":"sw003","name":"律盾智能","category":"法律科技","developer":"律盾科技（深圳）有限公司","launchDate":"2026-06-01","productDescription":"AI驱动的法律文书生成与合同审查平台，面向律所和企业法务部门","coreFeatures":["AI法律文书自动生成","智能合同审查与风险提示","法律知识库检索","案例智能匹配推荐","多语言法律翻译"],"pricing":{"free":"个人律师版：基础功能免费","team":"团队版：¥3999/年/5人","firm":"律所版：¥19999/年/不限人数","enterprise":"企业版：¥49999/年+定制"},"targetUsers":"律师事务所、企业法务部、法律服务机构","adOpportunity":"高 - 新品上市需要大规模品牌曝光和搜索占位","website":"—","notes":"2026年6月正式上线，已参与多个律协展会，推广预算300万+"},{"id":"sw005","name":"金蝶云·星瀚AI","category":"企业管理软件","developer":"金蝶国际软件集团","launchDate":"2026-05-28","productDescription":"金蝶新一代AI原生ERP平台，集成大模型能力的智能企业管理系统","coreFeatures":["AI智能财务（自动记账、智能报表）","智能供应链预测","AI HR助手（招聘、绩效、培训）","智能数据分析与决策","多端协同办公"],"pricing":{"standard":"标准版：¥29800/年起","professional":"专业版：¥59800/年起","premium":"旗舰版：¥128000/年起","custom":"定制版：按需报价"},"targetUsers":"中大型制造企业、零售连锁、服务业集团","adOpportunity":"高 - 金蝶品牌升级需大规模推广，搜索是核心渠道","website":"https://www.kingdee.com","notes":"上市公司年度重点产品，市场预算预计5000万+"},{"id":"sw006","name":"客多多SCRM","category":"营销SaaS","developer":"客多多科技（广州）有限公司","launchDate":"2026-04-05","productDescription":"基于企业微信的社交客户关系管理系统，专注私域流量运营和客户转化","coreFeatures":["企业微信客户管理","智能标签与客户画像","自动化营销旅程","社群运营工具","ROI数据分析看板"],"pricing":{"free":"免费版：100联系人","basic":"基础版：¥199/月/3人","pro":"专业版：¥599/月/10人","business":"商业版：¥1999/月/不限人数"},"targetUsers":"中小企业、电商、教育机构、本地生活商户","adOpportunity":"高 - SCRM赛道红海，搜索排名决定生存","website":"—","notes":"已获Pre-A轮2000万融资，Q3重点推广"},{"id":"sw007","name":"智学宝AI教育平台","category":"教育科技","developer":"智学宝科技（北京）有限公司","launchDate":"2026-06-10","productDescription":"AI个性化学习平台，基于知识图谱和自适应学习算法，K12全科智能辅导","coreFeatures":["AI知识诊断与薄弱点分析","自适应学习路径规划","智能题库与举一反三","学情报告自动生成","家长端实时监控"],"pricing":{"monthly":"月度会员：¥299/月","quarterly":"季度会员：¥799/季","yearly":"年度会员：¥2499/年","family":"家庭版：¥3999/年/3个孩子"},"targetUsers":"K12学生家长、教育培训机构","adOpportunity":"高 - 6月暑期推广季，教育搜索流量高峰期","website":"—","notes":"暑期推广预算500万+，搜索+信息流双线投放"},{"id":"sw008","name":"数匠工场","category":"数据分析平台","developer":"数匠科技（上海）有限公司","launchDate":"2026-05-08","productDescription":"零代码AI数据分析平台，让业务人员也能轻松完成复杂数据分析","coreFeatures":["自然语言数据查询（问数据像聊天一样）","AI自动生成分析报告","可视化仪表盘拖拽搭建","多数据源接入（数据库、API、Excel）","团队协作与权限管理"],"pricing":{"free":"个人版：基础功能免费","team":"团队版：¥1999/月/10人","business":"商业版：¥5999/月/30人","enterprise":"企业版：¥19999/月+私有化"},"targetUsers":"中小企业、电商运营、金融机构、市场部门","adOpportunity":"中 - 数据分析赛道竞争激烈，需GEO差异化","website":"—","notes":"已服务200+企业客户，2026年计划拓展10倍"},{"id":"sw009","name":"融易算财税通","category":"财税SaaS","developer":"融易算科技（深圳）有限公司","launchDate":"2026-04-15","productDescription":"AI智能财税管理平台，自动化记账报税+税务筹划建议","coreFeatures":["AI自动记账（OCR发票识别）","智能税务申报","税务风险预警","财税数据可视化","电子发票全流程管理"],"pricing":{"mini":"微企版：¥99/月","standard":"标准版：¥299/月","pro":"专业版：¥699/月","enterprise":"企业版：¥1999/月"},"targetUsers":"中小企业、个体工商户、代账公司","adOpportunity":"高 - 财税SaaS是搜索广告投放重点赛道","website":"—","notes":"已完成A+轮5000万融资，2026年市场推广加速"},{"id":"sw010","name":"微脉本地通","category":"本地生活SaaS","developer":"微脉科技（成都）有限公司","launchDate":"2026-06-15","productDescription":"本地生活商户全域营销平台，整合抖音、美团、高德、小红书等平台的一站式管理","coreFeatures":["多平台POI统一管理","AI生成营销内容（图文+视频脚本）","智能投放优化","评价管理与声誉维护","竞品监测与数据分析"],"pricing":{"basic":"单店版：¥499/月","chain":"连锁版：¥1999/月/10店","brand":"品牌版：¥5999/月/50店","enterprise":"企业版：定制报价"},"targetUsers":"餐饮、零售、美容美发、休闲娱乐等本地商户","adOpportunity":"高 - 本地生活是GEO最直接的应用场景","website":"—","notes":"6月新品上线，计划合作1000+本地商户，推广预算200万+"},{"id":"sw011","name":"构设云","category":"建筑设计SaaS","developer":"构设云科技（武汉）有限公司","launchDate":"2026-05-20","productDescription":"云端建筑协同设计平台，支持BIM在线协作和AI辅助设计","coreFeatures":["云端BIM协同设计","AI建筑方案生成","规范智能审查","项目管理与进度追踪","多专业协同批注"],"pricing":{"free":"个人设计师：基础功能免费","team":"设计团队：¥4999/年/5人","firm":"设计院版：¥19999/年/20人","enterprise":"企业版：¥59999/年"},"targetUsers":"建筑设计院、装修设计公司、工程咨询公司","adOpportunity":"中 - 建筑行业数字化加速，专业人群搜索精准","website":"—","notes":"切入建筑设计垂直赛道，差异化竞争"},{"id":"sw012","name":"猎查查背调系统","category":"人力资源科技","developer":"猎查查科技（北京）有限公司","launchDate":"2026-06-05","productDescription":"AI智能背调平台，自动化背景调查+风险洞察，招聘风控一体化","coreFeatures":["AI自动化背调（秒级出报告）","多维度风险模型","身份与学历验证","诉讼与失信记录查询","API对接主流HR系统"],"pricing":{"paygo":"按次付费：¥29/次","monthly":"月度包：¥999/50次","business":"企业版：¥4999/月/200次","enterprise":"旗舰版：¥14999/月/不限次数"},"targetUsers":"企业HR部门、猎头公司、招聘平台","adOpportunity":"高 - HR科技赛道搜索竞争激烈","website":"—","notes":"已对接猎聘/Boss直聘等平台，2026年重点推广"}],
   lastUpdated: "2026-06-29T14:40:00+08:00"
 };
@@ -229,7 +624,7 @@ function aiSwitch(t){
   aiRender();
 }
 function tg(i){
-  var m={'医疗':'tag-medical','医疗-口腔':'tag-medical','医疗-医药':'tag-medical','医疗-体检':'tag-medical','医疗-互联网医疗':'tag-medical','教育':'tag-education','教育-在线教育':'tag-education','教育-K12':'tag-education','教育-公考培训':'tag-education','游戏':'tag-game','游戏-手游':'tag-game','游戏-端游/手游':'tag-game','金融':'tag-finance','金融-保险':'tag-finance','金融-财富管理':'tag-finance','金融-互联网金融':'tag-finance','金融-保险科技':'tag-finance','金融-银行':'tag-finance','法律':'tag-law','法律-律所':'tag-law','装修':'tag-decoration','装修-家居':'tag-decoration','装修-建陶':'tag-decoration','装修-建材':'tag-decoration','装修-互联网家装':'tag-decoration','装修-家装':'tag-decoration','装修-家居卖场':'tag-decoration','本地生活':'tag-local','本地生活-O2O':'tag-local','本地生活-房产':'tag-local','本地生活-旅游':'tag-local','本地生活-汽车':'tag-local','本地生活-文旅':'tag-local','机械设备':'tag-machinery','机械设备-工程机械':'tag-machinery'};
+  var m={'医疗':'tag-medical','医疗-口腔':'tag-medical','医疗-医药':'tag-medical','医疗-体检':'tag-medical','医疗-互联网医疗':'tag-medical','教育':'tag-education','教育-在线教育':'tag-education','教育-K12':'tag-education','教育-公考培训':'tag-education','游戏':'tag-game','游戏-手游':'tag-game','游戏-端游/手游':'tag-game','金融理财':'tag-finance','金融理财-银行':'tag-finance','金融理财-保险':'tag-finance','金融理财-保险科技':'tag-finance','金融理财-互联网金融':'tag-finance','金融':'tag-finance','金融-保险':'tag-finance','金融-财富管理':'tag-finance','金融-互联网金融':'tag-finance','金融-保险科技':'tag-finance','金融-银行':'tag-finance','法律':'tag-law','法律-律所':'tag-law','装修':'tag-decoration','装修-家居':'tag-decoration','装修-建陶':'tag-decoration','装修-建材':'tag-decoration','装修-互联网家装':'tag-decoration','装修-家装':'tag-decoration','装修-家居卖场':'tag-decoration','本地生活':'tag-local','本地生活-O2O':'tag-local','本地生活-房产':'tag-local','本地生活-旅游':'tag-local','本地生活-汽车':'tag-local','本地生活-文旅':'tag-local','本地生活-互联网家装':'tag-local','机械设备':'tag-machinery','机械设备-工程机械':'tag-machinery','科技3C':'tag-tech','科技3C-自动驾驶':'tag-tech','科技3C-AI':'tag-tech','科技3C-AI大模型':'tag-tech','电商快销':'tag-ecommerce','电商快销-美妆':'tag-ecommerce','企业服务':'tag-enterprise','IT软件':'tag-software','IT软件-企业管理':'tag-software','IT软件-操作系统':'tag-software'};
   return m[i]||'tag-other';
 }
 function aiData(){
@@ -333,6 +728,11 @@ function upStats(){
   var dd = D.lastUpdated || '2026-06-30';
   document.getElementById('updateDate').textContent = dd;
   document.getElementById('footerDate').textContent = dd;
+  // 计算今年第几周
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 1);
+  var weekNo = Math.ceil((((now - start) / 86400000) + start.getDay() + 1) / 7);
+  document.getElementById('weekNum').textContent = weekNo;
   upStats();
 })();
 </script>
