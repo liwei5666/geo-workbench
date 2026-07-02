@@ -199,7 +199,7 @@ var __DATA__ = {
       deadline: "2026-07-15",
       contactPerson: "张经理",
       phone: "010-82345678",
-      website: "—",
+      website: "https://www.arrastrong.com",
       location: "北京",
       notes: "需提供GEO优化案例，优先考虑有医疗行业经验的供应商",
       status: "招标中",
@@ -217,7 +217,7 @@ var __DATA__ = {
       deadline: "2026-07-08",
       contactPerson: "李总监",
       phone: "021-62345678",
-      website: "—",
+      website: "https://www.to8to.com",
       location: "上海",
       notes: "重点需求：本地搜索排名提升，覆盖百度、谷歌、必应",
       status: "招标中",
@@ -235,7 +235,7 @@ var __DATA__ = {
       deadline: "2026-07-20",
       contactPerson: "王总",
       phone: "0755-86345678",
-      website: "—",
+      website: "https://game.163.com",
       location: "深圳",
       notes: "海外发行游戏，需GEO+ASO联合推广方案",
       status: "招标中",
@@ -253,7 +253,7 @@ var __DATA__ = {
       deadline: "2026-07-25",
       contactPerson: "陈女士",
       phone: "0571-88345678",
-      website: "—",
+      website: "https://www.xueersi.com",
       location: "杭州",
       notes: "含GEO优化+KOL内容种草+舆情监测，需提供教育行业案例",
       status: "招标中",
@@ -271,7 +271,7 @@ var __DATA__ = {
       deadline: "2026-07-10",
       contactPerson: "赵总",
       phone: "010-56347890",
-      website: "—",
+      website: "https://www.lu.com",
       location: "北京",
       notes: "金融合规要求严格，需有金融行业GEO服务资质",
       status: "招标中",
@@ -289,7 +289,7 @@ var __DATA__ = {
       deadline: "2026-07-05",
       contactPerson: "刘主任",
       phone: "020-38345678",
-      website: "—",
+      website: "https://www.allbrightlaw.com",
       location: "广州",
       notes: "需求：法律关键词GEO排名+律所品牌建设",
       status: "招标中",
@@ -663,7 +663,7 @@ var __DATA__ = {
       geoNeed: "开源鸿蒙入局机器人领域的搜索认知建设",
       contactPerson: "生态合作部",
       phone: "0755-86335678",
-      website: "—",
+      website: "https://www.openharmony.cn",
       location: "深圳",
       potentialScore: 80,
       reason: "新赛道刚起步，搜索占位窗口期",
@@ -1183,7 +1183,7 @@ function adRender(){
 function rcBid(r){
   var dl=new Date(r.deadline),now=new Date(),days=isNaN(dl)?'?':Math.ceil((dl-now)/86400000);
   var dc=days<=7?'var(--danger)':days<=14?'var(--warning)':'var(--success)';
-  var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':'<a href="https://www.baidu.com/s?wd='+encodeURIComponent(r.company)+'%20%E5%AE%98%E7%BD%91" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🔍</a>';
+  var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':r.company;
   var h='<div class="client-card"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><div style="text-align:right"><div style="font-size:12px;color:'+dc+';font-weight:600">⏰ '+days+'天</div><div style="font-size:11px;color:var(--text-secondary)">'+r.deadline+'截止</div></div></div>';
   h+='<div class="card-body">';
   h+='<div class="info-row"><span class="label">📌</span><span class="value">'+(r.bidTitle||'')+'</span></div>';
@@ -1196,7 +1196,7 @@ function rcBid(r){
   return h;
 }
 function rcPot(r){
-  var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':'<a href="https://www.baidu.com/s?wd='+encodeURIComponent(r.company)+'%20%E5%AE%98%E7%BD%91" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🔍</a>';
+  var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':r.company;
   var h='<div class="client-card"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><div class="score-badge">🔥 '+(r.potentialScore||'?')+'分</div></div>';
   h+='<div class="card-body">';
   h+='<div class="info-row"><span class="label">💰</span><span class="value" style="color:var(--warning);font-weight:600">'+(r.estimatedBudget||'')+'</span></div>';
@@ -1211,7 +1211,7 @@ function rcDone(r){
   var urg=r.priority==='紧急',cc=urg?'client-card urgent-card':'client-card';
   var pc=urg?'priority-urgent':r.priority==='高'?'priority-high':r.priority==='中'?'priority-medium':'priority-low';
   var em=urg?'🚨 ':r.priority==='高'?'⚠️ ':'';
-  var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':'<a href="https://www.baidu.com/s?wd='+encodeURIComponent(r.company)+'%20%E5%AE%98%E7%BD%91" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🔍</a>';
+  var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':'<span style="color:var(--text-secondary);cursor:default">'+r.company+'</span>';
   var h='<div class="'+cc+'"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><span class="priority-badge '+pc+'">'+em+r.priority+'</span></div>';
   h+='<div class="card-body">';
   h+='<div class="info-row"><span class="label">📌</span><span class="value">'+(r.bidTitle||'')+'</span></div>';
