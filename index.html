@@ -29,6 +29,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .hub-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
 .hub-card.ai:hover{border-color:var(--accent);box-shadow:0 12px 40px rgba(79,143,247,0.25);}
 .hub-card.ad:hover{border-color:var(--success);box-shadow:0 12px 40px rgba(52,211,153,0.25);}
+.hub-card.insight:hover{border-color:var(--info);box-shadow:0 12px 40px rgba(96,165,250,0.25);}
 .hub-card .icon{font-size:56px;margin-bottom:16px;display:block;}
 .hub-card .title{font-size:22px;font-weight:700;margin-bottom:8px;}
 .hub-card.ai .title{color:var(--accent);}
@@ -69,7 +70,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .tag-game{background:rgba(167,139,250,0.15);color:#a78bfa;}.tag-finance{background:rgba(251,191,36,0.15);color:#fbbf24;}
 .tag-law{background:rgba(244,114,182,0.15);color:#f472b6;}.tag-decoration{background:rgba(249,115,22,0.15);color:#f97316;}
 .tag-local{background:rgba(52,211,153,0.15);color:#34d399;}.tag-machinery{background:rgba(148,163,184,0.15);color:#94a3b8;}
-.tag-other{background:rgba(148,163,184,0.1);color:#94a3b8;}
+.tag-network{background:rgba(96,165,250,0.15);color:#60a5fa;}.tag-business{background:rgba(251,191,36,0.15);color:#fbbf24;}.tag-other{background:rgba(148,163,184,0.1);color:#94a3b8;}
 .priority-badge{font-size:11px;padding:3px 10px;border-radius:10px;font-weight:600;}
 .priority-high{background:rgba(248,113,113,0.15);color:#f87171;}.priority-urgent{background:rgba(249,115,22,0.2);color:#f97316;animation:pulse 2s infinite;}
 .priority-medium{background:rgba(251,191,36,0.15);color:#fbbf24;}.priority-low{background:rgba(148,163,184,0.15);color:#94a3b8;}
@@ -92,6 +93,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .empty-state{text-align:center;padding:60px 20px;color:var(--text-secondary);}
 .empty-state .icon{font-size:48px;margin-bottom:16px;}
 .urgent-card{border-color:rgba(249,115,22,0.4);}
+
 
 .footer-bar{text-align:center;padding:32px 20px 16px;color:var(--text-secondary);font-size:12px;border-top:1px solid var(--border);margin-top:32px;}
 .footer-bar span{color:var(--accent);}
@@ -116,7 +118,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 <!-- ====== 首页首屏 ====== -->
 <div class="landing" id="landingView">
   <h2>选择商机板块</h2>
-  <p>两大板块覆盖 AI创新 + 传统广告 全渠道商机</p>
+  <p>三大板块覆盖 AI创新商机 · 竞品客户商机 · 市场洞察</p>
   <div class="hub">
     <div class="hub-card ai" onclick="enterSection('ai')">
       <span class="icon">🤖</span>
@@ -128,12 +130,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
         <div class="stat-item"><div class="stat-num" style="color:var(--urgent)" id="statDone">0</div><div class="stat-label">已招标复联</div></div>
       </div>
     </div>
-    <div class="hub-card ad" onclick="enterSection('ad')">
-      <span class="icon">📡</span>
-      <div class="title">传统广告商机</div>
+    <div class="hub-card ad" onclick="enterSection('comp')">
+      <span class="icon">🏆</span>
+      <div class="title" style="color:var(--warning)">竞品客户商机</div>
+      <div class="desc">百度有投放 · 360无投放<br>竞品客户挖掘 · 增量拓客</div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="stat-num" style="color:var(--warning)" id="statCompetitor">0</div><div class="stat-label">竞品客户</div></div>
+      </div>
+    </div>
+    <div class="hub-card insight" onclick="enterSection('ad')">
+      <span class="icon">📊</span>
+      <div class="title" style="color:var(--info)">市场洞察</div>
       <div class="desc">最新上线软件产品<br>SaaS · 营销工具 · 行业情报</div>
       <div class="stats-row">
-        <div class="stat-item"><div class="stat-num" style="color:var(--success)" id="statSoftware">0</div><div class="stat-label">软件追踪</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--info)" id="statSoftware">0</div><div class="stat-label">软件追踪</div></div>
       </div>
     </div>
   </div>
@@ -151,27 +161,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
   </div>
   <div class="toolbar">
     <input class="search-input" id="aiSearch" placeholder="🔍 搜索公司名、行业、联系人..." oninput="aiRender()">
-    <select class="filter-select" id="aiIndustry" onchange="aiRender()">
-      <option value="all">全部行业</option>
-      <option value="医疗">医疗</option><option value="教育">教育</option><option value="游戏">游戏</option>
-      <option value="金融">金融</option><option value="装修">装修</option><option value="本地生活">本地生活</option><option value="机械设备">机械设备</option><option value="汽车">汽车</option><option value="法律">法律</option>
-    </select>
     <span class="result-count" id="aiCount">共 0 条</span>
   </div>
+  <div class="tabs" id="industryTabs" style="display:none;margin-bottom:12px">
+    <button class="tab-btn active" onclick="aiIndustrySwitch('all')">📂 全部</button>
+    <button class="tab-btn" onclick="aiIndustrySwitch('医疗')">🏥 医疗</button>
+    <button class="tab-btn" onclick="aiIndustrySwitch('游戏')">🎮 游戏</button>
+    <button class="tab-btn" onclick="aiIndustrySwitch('教育')">📚 教育</button>
+    <button class="tab-btn" onclick="aiIndustrySwitch('房产装修')">🏠 房产装修</button>
+    <button class="tab-btn" onclick="aiIndustrySwitch('本地生活')">📍 本地生活</button>
+    <button class="tab-btn" onclick="aiIndustrySwitch('网络服务')">🌐 网络服务</button>
+    <button class="tab-btn" onclick="aiIndustrySwitch('商务服务')">💼 商务服务</button>
+  </div>
+
   <div class="summary-panel" id="summaryPanel"><h3>⚠️ 紧急跟单提醒</h3><ul class="summary-list" id="summaryList"></ul></div>
   <div class="cards-container" id="aiCards"></div>
 </div>
 
-<!-- ====== 传统广告商机详情 ====== -->
+<!-- ====== 市场洞察详情 ====== -->
 <div class="content-view" id="adView">
-  <div class="section-header" style="border-left:3px solid var(--success)">
-    <div><h2 style="color:var(--success)">📡 传统广告商机</h2><span style="font-size:12px;color:var(--text-secondary)">最新上线软件产品 · SaaS · 营销工具 · 行业情报</span></div>
+  <div class="section-header" style="border-left:3px solid var(--info)">
+    <div><h2 style="color:var(--info)">📊 市场洞察</h2><span style="font-size:12px;color:var(--text-secondary)">最新上线软件产品 · SaaS · 营销工具 · 行业情报</span></div>
   </div>
   <div class="toolbar" style="margin-top:0">
     <input class="search-input" id="adSearch" placeholder="🔍 搜索产品名、类别、开发商..." oninput="adRender()">
     <span class="result-count" id="adCount">共 0 条</span>
   </div>
   <div class="cards-container" id="adCards"></div>
+</div>
+
+<!-- ====== 竞品客户商机详情 ====== -->
+<div class="content-view" id="compView">
+  <div class="section-header" style="border-left:3px solid var(--warning)">
+    <div><h2 style="color:var(--warning)">🏆 竞品客户商机</h2><span style="font-size:12px;color:var(--text-secondary)">百度有广告投放 + 360无广告投放 · 竞品客户挖掘 · 增量拓客</span></div>
+  </div>
+  <div class="toolbar" style="margin-top:0">
+    <input class="search-input" id="compSearch" placeholder="🔍 搜索公司名、行业、联系人..." oninput="compRender()">
+    <span class="result-count" id="compCount">共 0 条</span>
+  </div>
+  <div class="cards-container" id="compCards"></div>
 </div>
 
 <div class="footer-bar">
@@ -800,6 +828,7 @@ var __DATA__ = {
       addedDate: "2026-06-24"
     }
   ],
+  competitorClients: [],
   software: [
     {
       id: "sw001",
@@ -1107,23 +1136,40 @@ var __DATA__ = {
 
 var D = __DATA__;
 var AI_T = 'bidding';
+var AI_INDUSTRY = 'all';
+
+function industryCategory(i){
+  if(!i)return '商务服务';
+  if(i.indexOf('医疗')!==-1)return '医疗';
+  if(i.indexOf('游戏')!==-1)return '游戏';
+  if(i.indexOf('教育')!==-1)return '教育';
+  if(i.indexOf('房产')!==-1||i.indexOf('装修')!==-1||i.indexOf('家居')!==-1||i.indexOf('家装')!==-1)return '房产装修';
+  if(i.indexOf('本地生活')!==-1||i.indexOf('O2O')!==-1||i.indexOf('旅游')!==-1||i.indexOf('汽车')!==-1)return '本地生活';
+  if(i.indexOf('IT软件')!==-1||i.indexOf('科技')!==-1||i.indexOf('操作系统')!==-1||i.indexOf('AI')!==-1||i.indexOf('互联网')!==-1||i.indexOf('网络')!==-1)return '网络服务';
+  return '商务服务';
+}
 
 function goLanding(){
   document.getElementById('landingView').style.display='block';
   document.getElementById('aiView').style.display='none';
   document.getElementById('adView').style.display='none';
+  document.getElementById('compView').style.display='none';
   document.getElementById('backBtn').style.display='none';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function enterSection(s){
   document.getElementById('landingView').style.display='none';
   document.getElementById('backBtn').style.display='inline-block';
+  document.getElementById('aiView').style.display='none';
+  document.getElementById('adView').style.display='none';
+  document.getElementById('compView').style.display='none';
   if(s==='ai'){
     document.getElementById('aiView').style.display='block';
-    document.getElementById('adView').style.display='none';
     aiRender();
+  }else if(s==='comp'){
+    document.getElementById('compView').style.display='block';
+    compRender();
   }else{
-    document.getElementById('aiView').style.display='none';
     document.getElementById('adView').style.display='block';
     adRender();
   }
@@ -1136,19 +1182,42 @@ function aiSwitch(t){
   event.target.classList.add('active');
   document.getElementById('summaryPanel').style.display=(t==='completed')?'block':'none';
   if(t==='completed')aiSummary();
+  // Show/hide industry sub-tabs and filter bar
+  var indTabs=document.getElementById('industryTabs');
+  if(t==='potential'){
+    indTabs.style.display='flex';
+    // Reset industry tab to 'all' when entering potential
+    AI_INDUSTRY='all';
+    var ibs=document.querySelectorAll('#industryTabs .tab-btn');
+    for(var j=0;j<ibs.length;j++)ibs[j].classList.remove('active');
+    if(ibs[0])ibs[0].classList.add('active');
+  }else{
+    indTabs.style.display='none';
+  }
+  aiRender();
+}
+function aiIndustrySwitch(cat){
+  AI_INDUSTRY=cat;
+  var bs=document.querySelectorAll('#industryTabs .tab-btn');
+  for(var i=0;i<bs.length;i++)bs[i].classList.remove('active');
+  event.target.classList.add('active');
   aiRender();
 }
 function tg(i){
   var m={'医疗':'tag-medical','医疗-口腔':'tag-medical','医疗-医药':'tag-medical','医疗-体检':'tag-medical','医疗-互联网医疗':'tag-medical','教育':'tag-education','教育-在线教育':'tag-education','教育-K12':'tag-education','教育-公考培训':'tag-education','游戏':'tag-game','游戏-手游':'tag-game','游戏-端游/手游':'tag-game','金融':'tag-finance','金融-保险':'tag-finance','金融-财富管理':'tag-finance','金融-互联网金融':'tag-finance','金融-保险科技':'tag-finance','金融-银行':'tag-finance','法律':'tag-law','法律-律所':'tag-law','装修':'tag-decoration','装修-家居':'tag-decoration','装修-建陶':'tag-decoration','装修-建材':'tag-decoration','装修-互联网家装':'tag-decoration','装修-家装':'tag-decoration','装修-家居卖场':'tag-decoration','本地生活':'tag-local','本地生活-O2O':'tag-local','本地生活-房产':'tag-local','本地生活-旅游':'tag-local','本地生活-汽车':'tag-local','本地生活-文旅':'tag-local','机械设备':'tag-machinery','机械设备-工程机械':'tag-machinery'};
+  if(i.indexOf('网络')!==-1||i.indexOf('互联网')!==-1||i.indexOf('IT')!==-1||i.indexOf('科技')!==-1||i.indexOf('操作系统')!==-1)return 'tag-network';
+  if(i.indexOf('商务')!==-1||i.indexOf('金融')!==-1||i.indexOf('法律')!==-1||i.indexOf('机械设备')!==-1||i.indexOf('电商')!==-1||i.indexOf('快销')!==-1||i.indexOf('财税')!==-1)return 'tag-business';
   return m[i]||'tag-other';
 }
 function aiData(){
   var s=(document.getElementById('aiSearch').value||'').toLowerCase().trim();
-  var ind=document.getElementById('aiIndustry').value;
   var arr=AI_T==='bidding'?D.currentBidding:AI_T==='potential'?D.potentialClients:D.completedBidding;
   return arr.filter(function(r){
     if(s){if([r.company||'',r.industry||'',r.contactPerson||'',r.location||'',r.bidTitle||'',r.notes||''].join(' ').toLowerCase().indexOf(s)===-1)return false;}
-    if(ind!=='all'){if((r.industry||'').indexOf(ind)===-1)return false;}
+    // Industry category filter (only for potential tab)
+    if(AI_T==='potential'&&AI_INDUSTRY!=='all'){
+      if(industryCategory(r.industry)!==AI_INDUSTRY)return false;
+    }
     return true;
   });
 }
@@ -1168,6 +1237,28 @@ function aiSummary(){
   var h='';
   for(var i=0;i<u.length;i++)h+='<li><span>🚨 <strong>'+u[i].company+'</strong> ('+u[i].industry+') - '+u[i].contractAmount+'</span><span style="color:var(--warning)">到期: '+u[i].serviceEnd+' | '+u[i].recontactTiming+'</span></li>';
   l.innerHTML=h;
+}
+function compRender(){
+  var s=(document.getElementById('compSearch').value||'').toLowerCase().trim();
+  var f=D.competitorClients;
+  if(s)f=f.filter(function(r){return[r.company||'',r.industry||'',r.contactPerson||'',r.baiduPlatform||'',r.location||''].join(' ').toLowerCase().indexOf(s)!==-1;});
+  document.getElementById('compCount').textContent='共 '+f.length+' 条';
+  var c=document.getElementById('compCards');
+  if(!f.length){c.innerHTML='<div class="empty-state"><div class="icon">📭</div><p>暂无竞品客户数据，后续更新将在此展示</p></div>';return;}
+  c.innerHTML=f.map(rcComp).join('');
+}
+function rcComp(r){
+  var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':r.company;
+  var nm2=r.website&&r.website!=='—'?nm:'<a href="https://www.baidu.com/s?wd='+encodeURIComponent(r.company)+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">'+r.company+' 🔍</a>';
+  var h='<div class="client-card"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm2+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><span class="priority-badge priority-high">🏆 竞品客户</span></div>';
+  h+='<div class="card-body">';
+  if(r.baiduPlatform)h+='<div class="info-row"><span class="label">📡</span><span class="value" style="color:var(--warning)">百度投放: '+(r.baiduPlatform||'')+'</span></div>';
+  if(r.estimatedBaiduBudget)h+='<div class="info-row"><span class="label">💰</span><span class="value" style="color:var(--accent);font-weight:600">'+(r.estimatedBaiduBudget||'')+'</span></div>';
+  h+='<div class="info-row"><span class="label">👤</span><span class="value">'+(r.contactPerson||'')+' | '+(r.phone||'')+'</span></div>';
+  if(r.website&&r.website!=='—')h+='<div class="info-row"><span class="label">🌐</span><span class="value"><a href="'+r.website+'" target="_blank">'+r.website+'</a></span></div>';
+  if(r.notes)h+='</div><div class="card-footer"><span class="notes-text">💡 '+r.notes+'</span><span style="font-size:11px">添加于 '+(r.addedDate||'')+'</span></div></div>';
+  else h+='</div><div class="card-footer"><span class="notes-text"></span><span style="font-size:11px">添加于 '+(r.addedDate||'')+'</span></div></div>';
+  return h;
 }
 function adRender(){
   var s=(document.getElementById('adSearch').value||'').toLowerCase().trim();
@@ -1241,6 +1332,7 @@ function upStats(){
   document.getElementById('statBidding').textContent=D.currentBidding.length;
   document.getElementById('statPotential').textContent=D.potentialClients.length;
   document.getElementById('statDone').textContent=D.completedBidding.length;
+  document.getElementById('statCompetitor').textContent=(D.competitorClients||[]).length;
   document.getElementById('statSoftware').textContent=D.software.length;
 }
 

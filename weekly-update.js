@@ -157,11 +157,27 @@ function main() {
   const parsed = parseData(html);
   if (!parsed) { process.exit(1); }
 
+  function industryCategory(i){
+    if(!i)return '商务服务';
+    if(i.indexOf('医疗')!==-1)return '医疗';
+    if(i.indexOf('游戏')!==-1)return '游戏';
+    if(i.indexOf('教育')!==-1)return '教育';
+    if(i.indexOf('房产')!==-1||i.indexOf('装修')!==-1||i.indexOf('家居')!==-1||i.indexOf('家装')!==-1)return '房产装修';
+    if(i.indexOf('本地生活')!==-1||i.indexOf('O2O')!==-1||i.indexOf('旅游')!==-1||i.indexOf('汽车')!==-1)return '本地生活';
+    if(i.indexOf('IT软件')!==-1||i.indexOf('科技')!==-1||i.indexOf('操作系统')!==-1||i.indexOf('AI')!==-1||i.indexOf('互联网')!==-1||i.indexOf('网络')!==-1)return '网络服务';
+    return '商务服务';
+  }
+
   const { data, start, end } = parsed;
   console.log(`[✓] 当前数据:`);
   console.log(`   正在招标: ${data.currentBidding?.length || 0}`);
   console.log(`   潜力客户: ${data.potentialClients?.length || 0}`);
+  // 按行业板块统计潜力客户
+  var catCount = {};
+  (data.potentialClients||[]).forEach(function(p){var c=industryCategory(p.industry);catCount[c]=(catCount[c]||0)+1;});
+  Object.keys(catCount).sort().forEach(function(c){console.log('     📂 '+c+': '+catCount[c]);});
   console.log(`   已招标复联: ${data.completedBidding?.length || 0}`);
+  console.log(`   竞品客户: ${(data.competitorClients||[]).length}`);
   console.log(`   软件追踪: ${data.software?.length || 0}`);
 
   refresh(data);
