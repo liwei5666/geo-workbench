@@ -181,19 +181,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
     <button class="tab-btn" onclick="adSwitch('software')">📊 软件市场洞察</button>
   </div>
   <div id="adCompSection">
-    <div class="tabs" id="compIndustryTabs" style="margin-bottom:12px">
-      <button class="tab-btn active" onclick="compIndustrySwitch('all')">📂 全部</button>
-      <button class="tab-btn" onclick="compIndustrySwitch('法律')">⚖️ 法律</button>
-      <button class="tab-btn" onclick="compIndustrySwitch('软件')">💻 软件</button>
-      <button class="tab-btn" onclick="compIndustrySwitch('办公')">📎 办公</button>
-      <button class="tab-btn" onclick="compIndustrySwitch('招投标')">📋 招投标</button>
-      <button class="tab-btn" onclick="compIndustrySwitch('检验检测')">🔬 检验检测</button>
-    </div>
     <div class="toolbar" style="margin-top:0">
       <input class="search-input" id="compSearch" placeholder="🔍 搜索公司名、行业、联系人..." oninput="compRender()">
       <span class="result-count" id="compCount">共 0 条</span>
     </div>
-    <div class="cards-container" id="compCards"></div>
+    <div id="compBlocks"></div>
   </div>
   <div id="adSoftSection" style="display:none">
     <div class="toolbar" style="margin-top:0">
@@ -1911,15 +1903,6 @@ function aiSummary(){
   l.innerHTML=h;
 }
 var AD_TAB = 'competitor';
-var COMP_IND = 'all';
-
-function compIndustrySwitch(cat){
-  COMP_IND=cat;
-  var bs=document.querySelectorAll('#compIndustryTabs .tab-btn');
-  for(var i=0;i<bs.length;i++)bs[i].classList.remove('active');
-  event.target.classList.add('active');
-  compRender();
-}
 function adSwitch(tab){
   AD_TAB=tab;
   var bs=document.querySelectorAll('#adTabs .tab-btn');
@@ -1928,24 +1911,41 @@ function adSwitch(tab){
   document.getElementById('adCompSection').style.display=(tab==='competitor')?'block':'none';
   document.getElementById('adSoftSection').style.display=(tab==='software')?'block':'none';
   if(tab==='competitor'){
-    COMP_IND='all';
-    var ibs=document.querySelectorAll('#compIndustryTabs .tab-btn');
-    for(var j=0;j<ibs.length;j++)ibs[j].classList.remove('active');
-    if(ibs[0])ibs[0].classList.add('active');
     compRender();
   }else{
     adRender();
   }
 }
+function compIndustryList(r){
+  var ind=(r.industry||'');
+  var dash=ind.indexOf('-');
+  return dash>0?ind.substring(0,dash):ind;
+}
+var COMP_BLOCKS = ['法律','软件','办公','招投标','检验检测'];
+var COMP_ICONS = {'法律':'⚖️','软件':'💻','办公':'📎','招投标':'📋','检验检测':'🔬'};
 function compRender(){
   var s=(document.getElementById('compSearch').value||'').toLowerCase().trim();
-  var f=D.competitorClients;
-  if(s)f=f.filter(function(r){return[r.company||'',r.industry||'',r.contactPerson||'',r.baiduPlatform||'',r.location||''].join(' ').toLowerCase().indexOf(s)!==-1;});
-  if(COMP_IND!=='all')f=f.filter(function(r){return(r.industry||'').indexOf(COMP_IND)==0;});
-  document.getElementById('compCount').textContent='共 '+f.length+' 条';
-  var c=document.getElementById('compCards');
-  if(!f.length){c.innerHTML='<div class="empty-state"><div class="icon">📭</div><p>暂无竞品客户数据，后续更新将在此展示</p></div>';return;}
-  c.innerHTML=f.map(rcComp).join('');
+  var all=D.competitorClients.filter(function(r){
+    if(s)return[r.company||'',r.industry||'',r.contactPerson||'',r.baiduPlatform||'',r.location||''].join(' ').toLowerCase().indexOf(s)!==-1;
+    return true;
+  });
+  document.getElementById('compCount').textContent='共 '+all.length+' 条';
+  var container=document.getElementById('compBlocks');
+  if(!all.length){container.innerHTML='<div class="empty-state" style="padding:80px 20px"><div class="icon">📭</div><p>暂无匹配的竞品客户数据</p></div>';return;}
+  var html='';
+  for(var b=0;b<COMP_BLOCKS.length;b++){
+    var block=COMP_BLOCKS[b];
+    var icon=COMP_ICONS[block]||'📂';
+    var items=all.filter(function(r){return compIndustryList(r)===block;});
+    if(!items.length)continue;
+    html+='<div class="industry-block">';
+    html+='<div class="section-header" style="border-left:3px solid var(--accent);margin-top:16px">';
+    html+='<div><h2 style="font-size:16px">'+icon+' '+block+'</h2></div>';
+    html+='<span style="font-size:12px;color:var(--text-secondary)">共 '+items.length+' 家</span></div>';
+    html+=items.map(rcComp).join('');
+    html+='</div>';
+  }
+  container.innerHTML=html;
 }
 function rcComp(r){
   var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':r.company;
