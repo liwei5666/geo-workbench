@@ -1256,8 +1256,8 @@ function rcComp(r){
   if(r.estimatedBaiduBudget)h+='<div class="info-row"><span class="label">💰</span><span class="value" style="color:var(--accent);font-weight:600">'+(r.estimatedBaiduBudget||'')+'</span></div>';
   h+='<div class="info-row"><span class="label">👤</span><span class="value">'+(r.contactPerson||'')+' | '+(r.phone||'')+'</span></div>';
   if(r.website&&r.website!=='—')h+='<div class="info-row"><span class="label">🌐</span><span class="value"><a href="'+r.website+'" target="_blank">'+r.website+'</a></span></div>';
-  if(r.notes)h+='</div><div class="card-footer"><span class="notes-text">💡 '+r.notes+'</span><span style="font-size:11px">添加于 '+(r.addedDate||'')+'</span></div></div>';
-  else h+='</div><div class="card-footer"><span class="notes-text"></span><span style="font-size:11px">添加于 '+(r.addedDate||'')+'</span></div></div>';
+  if(r.notes)h+='</div><div class="card-footer"><span class="notes-text">💡 '+r.notes+'</span></div></div>';
+  else h+='</div><div class="card-footer"><span class="notes-text"></span></div></div>';
   return h;
 }
 function adRender(){
@@ -1297,7 +1297,7 @@ function rcPot(r){
   if(r.competitorGEO)h+='<div class="info-row"><span class="label">🏆 竞品</span><span class="value" style="font-size:12px">'+r.competitorGEO+'</span></div>';
   h+='<div class="info-row"><span class="label">👤</span><span class="value">'+(r.contactPerson||'')+' | '+(r.phone||'')+'</span></div>';
   if(r.website&&r.website!=='—')h+='<div class="info-row"><span class="label">🌐</span><span class="value"><a href="'+r.website+'" target="_blank">'+r.website+'</a></span></div>';
-  h+='</div><div class="card-footer"><span class="notes-text">📊 '+(r.reason||'')+'</span><span style="font-size:11px">添加于 '+(r.addedDate||'')+'</span></div></div>';
+  h+='</div><div class="card-footer"><span class="notes-text">📊 '+(r.reason||'')+'</span></div></div>';
   return h;
 }
 function rcDone(r){
