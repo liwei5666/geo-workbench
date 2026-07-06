@@ -1914,8 +1914,11 @@ var AD_TAB = 'competitor';
 function adSwitch(tab){
   AD_TAB=tab;
   var bs=document.querySelectorAll('#adTabs .tab-btn');
-  for(var i=0;i<bs.length;i++)bs[i].classList.remove('active');
-  event.target.classList.add('active');
+  for(var i=0;i<bs.length;i++){
+    bs[i].classList.remove('active');
+    // Activate by matching onclick attribute
+    if(bs[i].getAttribute('onclick').indexOf("'"+tab+"'")!==-1)bs[i].classList.add('active');
+  }
   document.getElementById('adCompSection').style.display=(tab==='competitor')?'block':'none';
   document.getElementById('adSoftSection').style.display=(tab==='software')?'block':'none';
   if(tab==='competitor'){
@@ -1932,8 +1935,10 @@ var COMP_IND = 'all';
 function compIndustrySwitch(cat){
   COMP_IND=cat;
   var bs=document.querySelectorAll('#compIndustryTabs .tab-btn');
-  for(var i=0;i<bs.length;i++)bs[i].classList.remove('active');
-  event.target.classList.add('active');
+  for(var i=0;i<bs.length;i++){
+    bs[i].classList.remove('active');
+    if(bs[i].getAttribute('onclick').indexOf("'"+cat+"'")!==-1)bs[i].classList.add('active');
+  }
   compRender();
 }
 function compIndustryList(r){
