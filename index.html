@@ -2360,7 +2360,8 @@ var __DATA__ = {
         phone: "待确认",
         website: "https://www.ctyun.cn",
         location: "北京",
-        notes: "原招标项目，来源：中国电信采购平台/大数跨境 ｜ 来源待核验",
+        notes: "原招标项目。来源：百度寻标宝/中国电信采购平台 ｜ 来源可信",
+        sourceUrl: "https://xunbiaobao.baidu.com/biddingDetail?id=f166bf74f7d8266b80aceeb05c7a550e31444814&source=seo",
         recontactTiming: "📅 建议2027年2月后接触",
         priority: "中",
         addedDate: "2026-07-14"
@@ -2424,7 +2425,7 @@ var __DATA__ = {
         company: "昆药集团股份有限公司",
         industry: "医疗-医药制造",
         bidTitle: "GEO AI 搜索引擎优化FY26H2",
-        winningVendor: "暂未公开",
+        winningVendor: "拟邀请上海至联传媒科技有限公司",
         contractAmount: "待定",
         serviceStart: "2026-07",
         serviceEnd: "2027-06",
@@ -2432,7 +2433,8 @@ var __DATA__ = {
         phone: "待确认",
         website: "https://www.kpc.com.cn",
         location: "云南昆明",
-        notes: "原招标项目，来源：华润守正采购平台/新浪财经转载 ｜ 来源待核验",
+        notes: "原招标项目，2026-06-19发布，华润守正采购平台。来源：新浪财经转载 ｜ 来源可信",
+        sourceUrl: "https://finance.sina.com.cn/stock/aigc/zab/2026-06-20/doc-iniczamz4174181.shtml",
         recontactTiming: "📅 建议2027年5月后接触",
         priority: "低",
         addedDate: "2026-07-14"
@@ -2450,7 +2452,8 @@ var __DATA__ = {
         phone: "待确认",
         website: "https://www.ccic-net.com.cn",
         location: "上海浦东",
-        notes: "原招标项目，来源：江苏国企阳光交易平台 ｜ 来源待核验",
+        notes: "原招标项目，2026-06-05发布，6月26日开标。来源：江苏国企阳光交易平台 ｜ 来源可信",
+        sourceUrl: "https://www.jsygjy.cn/cmscaigougg/0a002987e64b42aea192aca71f523cde.html",
         recontactTiming: "⏰ 金额大，建议2027年4月后关注续约",
         priority: "高",
         addedDate: "2026-07-14"
@@ -2486,7 +2489,8 @@ var __DATA__ = {
         phone: "待确认",
         website: "https://www.hisense.com",
         location: "青岛",
-        notes: "原招标项目，来源：大数跨境10100.com ｜ 来源待核验",
+        notes: "原招标项目，3月4日发布，面向集团数质中心供应商。来源：大数跨境 ｜ 来源可信",
+        sourceUrl: "https://www.10100.com/article/125643137",
         recontactTiming: "📅 建议2027年2月后接触",
         priority: "低",
         addedDate: "2026-07-14"
@@ -2495,7 +2499,7 @@ var __DATA__ = {
         id: "done032",
         company: "东风本田汽车有限公司",
         industry: "汽车-整车制造",
-        bidTitle: "AI平台车型推荐GEO项目",
+        bidTitle: "东风Honda 2026年GEO项目",
         winningVendor: "暂未公开",
         contractAmount: "待定",
         serviceStart: "2026-04",
@@ -2504,7 +2508,8 @@ var __DATA__ = {
         phone: "待确认",
         website: "https://www.dongfeng-honda.com",
         location: "武汉",
-        notes: "原招标项目，来源：大数跨境10100.com ｜ 来源待核验",
+        notes: "原招标项目，2026-02-13东风公司采购平台公开招标。来源：东风公司采购招投标平台 ｜ 来源可信",
+        sourceUrl: "https://etp.dfmc.com.cn/jyxx/004001/004001001/20260213/44869270-1e0e-4e82-96b4-24eba4b96f33.html",
         recontactTiming: "📅 建议2027年2月后接触",
         priority: "低",
         addedDate: "2026-07-14"
@@ -2540,7 +2545,8 @@ var __DATA__ = {
         phone: "待确认",
         website: "https://www.cpic.com.cn",
         location: "上海",
-        notes: "原招标项目（已过期迁移）。来源：中国采招网/Bidcenter ｜ 来源待核验",
+        notes: "原招标项目（已过期迁移），2026-04-22发布。来源：中国采招网/Bidcenter ｜ 来源可信",
+        sourceUrl: "https://www.bidcenter.com.cn/news-415454345-1.html",
         recontactTiming: "📅 建议2027年4月后接触",
         priority: "中",
         addedDate: "2026-07-14"
@@ -3399,6 +3405,7 @@ function rcDone(r){
   if(r.winningVendor&&r.winningVendor!=='⚠️未核实')h+='<div class="info-row"><span class="label">🏆</span><span class="value">'+r.winningVendor+'</span></div>';
   if(r.serviceStart&&r.serviceEnd)h+='<div class="info-row"><span class="label">📅</span><span class="value">'+r.serviceStart+' → '+r.serviceEnd+'</span></div>';
   h+='<div class="info-row"><span class="label">👤</span><span class="value">'+(r.contactPerson||'')+' | '+(r.phone||'')+'</span></div>';
+  if(r.sourceUrl)h+='<div class="info-row"><span class="label">📡</span><span class="value"><a href="'+r.sourceUrl+'" target="_blank" rel="noopener" style="font-size:12px">查看来源</a></span></div>';
   h+='</div><div class="card-footer"><span class="notes-text">💡 '+(r.notes||'')+'</span><span style="font-size:12px;color:var(--accent)">📞 '+(r.recontactTiming||'')+'</span></div></div>';
   return h;
 }
