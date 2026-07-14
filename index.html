@@ -3541,7 +3541,16 @@ function upStats(){
 }
 
 // Init
-(function() initial-scale=1.0">
+(function(){
+  var dd = D.lastUpdated || '2026-06-30';
+  document.getElementById('updateDate').textContent = dd;
+  document.getElementById('footerDate').textContent = dd;
+  upStats();
+})();
+</script>
+</body>
+</html>
+initial-scale=1.0">
 <title>360智汇商途 · GEO商机工作台</title>
 <style>
 :root {
