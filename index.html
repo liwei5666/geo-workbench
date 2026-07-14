@@ -159,6 +159,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
   </div>
   <div class="toolbar">
     <input class="search-input" id="aiSearch" placeholder="🔍 搜索公司名、行业、联系人..." oninput="aiRender()">
+    <select class="filter-select" id="aiCredFilter" onchange="aiRender()">
+      <option value="all">📊 全部可信度</option>
+      <option value="可信">✅ 来源可信</option>
+      <option value="待核验">⚠️ 来源待核验</option>
+      <option value="unknown">❓ 未标注</option>
+    </select>
     <span class="result-count" id="aiCount">共 0 条</span>
   </div>
   <div class="tabs" id="industryTabs" style="display:none;margin-bottom:12px">
@@ -3235,11 +3241,28 @@ function tg(i){
   if(i.indexOf('商务')!==-1||i.indexOf('金融')!==-1||i.indexOf('法律')!==-1||i.indexOf('机械设备')!==-1||i.indexOf('电商')!==-1||i.indexOf('快销')!==-1||i.indexOf('财税')!==-1)return 'tag-business';
   return m[i]||'tag-other';
 }
+function credLabel(r){
+  var n=(r.notes||'');
+  if(n.indexOf('来源可信')!==-1)return '可信';
+  if(n.indexOf('来源待核验')!==-1)return '待核验';
+  return 'unknown';
+}
+function credBadge(r){
+  var c=credLabel(r);
+  if(c==='可信')return '<span class="priority-badge" style="background:rgba(16,185,129,0.12);color:#059669;font-size:11px">✅ 来源可信</span>';
+  if(c==='待核验')return '<span class="priority-badge" style="background:rgba(245,158,11,0.12);color:#d97706;font-size:11px">⚠️ 待核验</span>';
+  return '';
+}
 function aiData(){
   var s=(document.getElementById('aiSearch').value||'').toLowerCase().trim();
+  var cf=document.getElementById('aiCredFilter').value;
   var arr=AI_T==='bidding'?D.currentBidding:AI_T==='potential'?D.potentialClients:D.completedBidding;
   return arr.filter(function(r){
     if(s){if([r.company||'',r.industry||'',r.contactPerson||'',r.location||'',r.bidTitle||'',r.notes||''].join(' ').toLowerCase().indexOf(s)===-1)return false;}
+    // Credibility filter
+    if(cf!=='all'){
+      if(credLabel(r)!==cf)return false;
+    }
     // Industry category filter (only for potential tab)
     if(AI_T==='potential'&&AI_INDUSTRY!=='all'){
       if(industryCategory(r.industry)!==AI_INDUSTRY)return false;
@@ -3339,7 +3362,7 @@ function rcBid(r){
   var dc=days<=7?'var(--danger)':days<=14?'var(--warning)':'var(--success)';
   var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':r.company;
   var nm2=r.website&&r.website!=='—'?nm:'<a href="https://www.baidu.com/s?wd='+encodeURIComponent(r.company)+'%20%E5%AE%98%E7%BD%91" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">'+r.company+' 🔍</a>';
-  var h='<div class="client-card"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm2+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><div style="text-align:right"><div style="font-size:12px;color:'+dc+';font-weight:600">⏰ '+days+'天</div><div style="font-size:11px;color:var(--text-secondary)">'+r.deadline+'截止</div></div></div>';
+  var h='<div class="client-card"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm2+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><div style="text-align:right"><div style="font-size:12px;color:'+dc+';font-weight:600">⏰ '+days+'天</div><div style="font-size:11px;color:var(--text-secondary)">'+r.deadline+'截止</div><div style="margin-top:4px">'+credBadge(r)+'</div></div></div>';
   h+='<div class="card-body">';
   h+='<div class="info-row"><span class="label">📌</span><span class="value">'+(r.bidTitle||'')+'</span></div>';
   h+='<div class="info-row"><span class="label">💰</span><span class="value" style="color:var(--warning);font-weight:600">'+(r.bidAmount||'')+'</span></div>';
@@ -3353,7 +3376,7 @@ function rcBid(r){
 function rcPot(r){
   var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':r.company;
   var nm2=r.website&&r.website!=='—'?nm:'<a href="https://www.baidu.com/s?wd='+encodeURIComponent(r.company)+'%20%E5%AE%98%E7%BD%91" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">'+r.company+' 🔍</a>';
-  var h='<div class="client-card"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm2+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><div class="score-badge">🔥 '+(r.potentialScore||'?')+'分</div></div>';
+  var h='<div class="client-card"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm2+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><div style="text-align:right"><div class="score-badge">🔥 '+(r.potentialScore||'?')+'分</div><div style="margin-top:4px">'+credBadge(r)+'</div></div></div>';
   h+='<div class="card-body">';
   h+='<div class="info-row"><span class="label">💰</span><span class="value" style="color:var(--warning);font-weight:600">'+(r.estimatedBudget||'')+'</span></div>';
   h+='<div class="info-row"><span class="label">🎯</span><span class="value">'+(r.geoNeed||'')+'</span></div>';
@@ -3369,7 +3392,7 @@ function rcDone(r){
   var em=urg?'🚨 ':r.priority==='高'?'⚠️ ':'';
   var nm=r.website&&r.website!=='—'?'<a href="'+r.website+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+r.company+' 🌐</a>':r.company;
   var nm2=r.website&&r.website!=='—'?nm:'<a href="https://www.baidu.com/s?wd='+encodeURIComponent(r.company)+'%20%E5%AE%98%E7%BD%91" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">'+r.company+' 🔍</a>';
-  var h='<div class="'+cc+'"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm2+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><span class="priority-badge '+pc+'">'+em+r.priority+'</span></div>';
+  var h='<div class="'+cc+'"><div class="card-header"><div class="card-header-left"><div class="company-name">'+nm2+'</div><span class="industry-tag '+tg(r.industry)+'">'+r.industry+'</span><span style="font-size:11px;color:var(--text-secondary)">📍 '+r.location+'</span></div><div style="text-align:right"><span class="priority-badge '+pc+'">'+em+r.priority+'</span><div style="margin-top:4px">'+credBadge(r)+'</div></div></div>';
   h+='<div class="card-body">';
   h+='<div class="info-row"><span class="label">📌</span><span class="value">'+(r.bidTitle||'')+'</span></div>';
   h+='<div class="info-row"><span class="label">💰</span><span class="value" style="color:var(--warning);font-weight:600">'+(r.contractAmount||'')+'</span></div>';
