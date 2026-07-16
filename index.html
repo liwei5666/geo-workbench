@@ -53,6 +53,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .search-input{flex:1;min-width:200px;background:var(--card-bg);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:var(--radius-sm);font-size:14px;outline:none;}
 .search-input:focus{border-color:var(--accent);}
 .search-input::placeholder{color:var(--text-secondary);}
+.download-btn{background:var(--accent);color:#fff;border:none;padding:10px 18px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-weight:500;white-space:nowrap;transition:0.2s;}
+.download-btn:hover{opacity:0.85;transform:translateY(-1px);}
 .filter-select{background:var(--card-bg);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:var(--radius-sm);font-size:13px;cursor:pointer;outline:none;}
 .result-count{font-size:13px;color:var(--text-secondary);white-space:nowrap;}
 .summary-panel{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px;display:none;}
@@ -102,6 +104,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 
 @media(max-width:768px){.hub{grid-template-columns:1fr}.cards-container{grid-template-columns:1fr}.header{padding:16px}.header h1{font-size:20px}}
 </style>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -166,6 +169,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
       <option value="unknown">❓ 未标注</option>
     </select>
     <span class="result-count" id="aiCount">共 0 条</span>
+    <button class="download-btn" onclick="aiDownload()">📥 下载名单</button>
   </div>
   <div class="tabs" id="industryTabs" style="display:none;margin-bottom:12px">
     <button class="tab-btn active" onclick="aiIndustrySwitch('all')">📂 全部</button>
@@ -3538,6 +3542,53 @@ function upStats(){
   document.getElementById('statDone').textContent=D.completedBidding.length;
   document.getElementById('statCompetitor').textContent=(D.competitorClients||[]).length;
   document.getElementById('statSoftware').textContent=D.software.length;
+}
+
+// ====== 下载名单（生成 Excel） ======
+function aiDownload(){
+  var f=aiData();
+  if(!f.length){alert('当前筛选结果为空，无数据可下载');return;}
+  var tabMap={bidding:'正在招标',potential:'潜力客户',completed:'已招标复联'};
+  var sheetName=tabMap[AI_T]||'客户名单';
+  var rows=[];
+  if(AI_T==='bidding'){
+    rows.push(['公司名称','行业','招标平台','招标标题','金额','截止日期','联系人','电话','网站','地点','备注','来源','来源URL','可信度']);
+    f.forEach(function(r){
+      rows.push([r.company||'',r.industry||'',r.bidPlatform||'',r.bidTitle||'',r.bidAmount||'',r.deadline||'',r.contactPerson||'',r.phone||'',r.website||'',r.location||'',r.notes||'',r.source||'',r.sourceUrl||'',credLabel(r)==='可信'?'可信':credLabel(r)==='待核验'?'待核验':'']);
+    });
+  }else if(AI_T==='potential'){
+    rows.push(['公司名称','行业','预计预算','GEO需求','联系人','电话','网站','地点','潜力评分','具体原因','备注']);
+    f.forEach(function(r){
+      rows.push([r.company||'',r.industry||'',r.estimatedBudget||'',r.geoNeed||'',r.contactPerson||'',r.phone||'',r.website||'',r.location||'',r.potentialScore||'',r.reason||'',r.notes||'']);
+    });
+  }else if(AI_T==='completed'){
+    rows.push(['公司名称','行业','招标标题','中标方','合同金额','服务开始','服务结束','联系人','电话','网站','地点','复联时机','优先级','备注','可信度']);
+    f.forEach(function(r){
+      rows.push([r.company||'',r.industry||'',r.bidTitle||'',r.winningVendor||'',r.contractAmount||'',r.serviceStart||'',r.serviceEnd||'',r.contactPerson||'',r.phone||'',r.website||'',r.location||'',r.recontactTiming||'',r.priority||'',r.notes||'',credLabel(r)==='可信'?'可信':credLabel(r)==='待核验'?'待核验':'']);
+    });
+  }
+  var wb=XLSX.utils.book_new();
+  var ws=XLSX.utils.aoa_to_sheet(rows);
+  // 设置列宽
+  var colWidths=[];
+  if(rows.length>0){
+    for(var c=0;c<rows[0].length;c++){
+      var maxW=10;
+      for(var ri=0;ri<rows.length;ri++){
+        var v=String(rows[ri][c]||'');
+        var len=0;
+        for(var ci=0;ci<v.length;ci++){
+          len+=v.charCodeAt(ci)>255?2:1;
+        }
+        if(len>maxW)maxW=len;
+      }
+      colWidths.push({wch:Math.min(maxW+2,60)});
+    }
+  }
+  ws['!cols']=colWidths;
+  XLSX.utils.book_append_sheet(wb,ws,sheetName);
+  var dateStr=new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb,'商机工作台_'+sheetName+'_'+dateStr+'.xlsx');
 }
 
 // Init
